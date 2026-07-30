@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran & Kalender Booking - Buper Talaga Pancar</title>
+    <title>Pendaftaran & Kalender Multi-Zona - Buper Talaga Pancar</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js untuk Diagram Donat Statistik -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             background-color: #1b382b;
@@ -33,17 +35,21 @@
         <!-- Header & Navigasi Menu Admin / Pendaftar -->
         <div class="wood-board p-5 rounded-2xl text-white flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="text-center sm:text-left">
-                <span class="bg-emerald-700/80 text-emerald-100 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-500">🌲 Bumi Perkemahan Resmi 🌲</span>
+                <span class="bg-emerald-700/80 text-emerald-100 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-500">🌲 Bumi Perkemahan Multi-Zona 🌲</span>
                 <h1 class="text-2xl sm:text-3xl font-extrabold mt-2 tracking-wide drop-shadow-md">BUPER TALAGA PANCAR</h1>
             </div>
             
             <!-- Tombol Pengalihan Menu -->
-            <div class="flex bg-amber-950/60 p-1.5 rounded-xl border border-amber-800">
-                <button onclick="switchView('user')" id="btnViewUser" class="px-4 py-2 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow">
-                    ⛺ Formulir Pendaftaran
+            <div class="flex flex-wrap bg-amber-950/60 p-1.5 rounded-xl border border-amber-800 gap-1">
+                <button onclick="switchView('user')" id="btnViewUser" class="px-3 py-2 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow">
+                    ⛺ Pendaftaran
                 </button>
-                <button onclick="switchView('admin')" id="btnViewAdmin" class="px-4 py-2 text-xs font-bold rounded-lg transition text-amber-200 hover:text-white">
+                <button onclick="switchView('admin')" id="btnViewAdmin" class="px-3 py-2 text-xs font-bold rounded-lg transition text-amber-200 hover:text-white relative">
                     ⚙️ Panel Admin
+                    <span id="adminBadge" class="hidden absolute -top-1 -right-1 bg-red-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">!</span>
+                </button>
+                <button onclick="switchView('stats')" id="btnViewStats" class="px-3 py-2 text-xs font-bold rounded-lg transition text-amber-200 hover:text-white">
+                    📊 Statistik Zona
                 </button>
             </div>
         </div>
@@ -51,16 +57,47 @@
         <!-- ================= VIEW 1: FORMULIR PENDAFTARAN & KALENDER (USER) ================= -->
         <div id="sectionUser" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            <!-- KALENDER TERBOKING (Kiri / 4 Kolom) -->
+            <!-- KALENDER TERBOKING BERDASARKAN ZONA (Kiri / 4 Kolom) -->
             <div class="lg:col-span-4 wood-board p-5 rounded-2xl text-white flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-3 border-b border-amber-800 pb-2">
                         <h2 class="text-base font-bold flex items-center gap-2">
-                            <span>📅</span> Kalender Terboking
+                            <span>📅</span> Kalender Per Zona
                         </h2>
-                        <span class="text-xs bg-amber-900/80 px-2 py-0.5 rounded text-amber-200">Juli 2026</span>
                     </div>
-                    <p class="text-xs text-amber-100/80 mb-3">Tanggal berwarna merah adalah jadwal yang sudah dipesan sekolah lain.</p>
+                    <p class="text-xs text-amber-100/80 mb-2">Pilih Zona & Bulan untuk melihat jadwal:</p>
+
+                    <!-- Pilihan Zona untuk Kalender -->
+                    <div class="mb-2">
+                        <label class="block text-[11px] font-semibold text-amber-200 mb-1">Filter Zona Kalender:</label>
+                        <select id="calendarZonaFilter" onchange="renderCalendar()" class="w-full px-2 py-1.5 text-xs bg-amber-950 text-amber-100 border border-amber-700 rounded-lg focus:outline-none">
+                            <option value="Zona A">Zona A</option>
+                            <option value="Zona B">Zona B</option>
+                            <option value="Zona C">Zona C</option>
+                            <option value="Zona Wisata">Zona Wisata</option>
+                        </select>
+                    </div>
+
+                    <!-- Navigasi Pilih Bulan & Tahun -->
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <select id="selectMonth" onchange="changeCalendarMonth()" class="px-2 py-1.5 text-xs bg-amber-950 text-amber-100 border border-amber-700 rounded-lg focus:outline-none">
+                            <option value="0">Januari</option>
+                            <option value="1">Februari</option>
+                            <option value="2">Maret</option>
+                            <option value="3">April</option>
+                            <option value="4">Mei</option>
+                            <option value="5">Juni</option>
+                            <option value="6">Juli</option>
+                            <option value="7">Agustus</option>
+                            <option value="8">September</option>
+                            <option value="9">Oktober</option>
+                            <option value="10">November</option>
+                            <option value="11">Desember</option>
+                        </select>
+                        <select id="selectYear" onchange="changeCalendarMonth()" class="px-2 py-1.5 text-xs bg-amber-950 text-amber-100 border border-amber-700 rounded-lg focus:outline-none">
+                            <!-- Di-generate lewat JS -->
+                        </select>
+                    </div>
 
                     <!-- Hari -->
                     <div class="calendar-grid text-center text-xs font-bold text-amber-200 mb-1">
@@ -69,7 +106,7 @@
 
                     <!-- Tanggal -->
                     <div id="calendarDays" class="calendar-grid gap-1 text-center text-xs font-semibold">
-                        <!-- Di-generate otomatis lewat JS -->
+                        <!-- Di-generate lewat JS -->
                     </div>
                 </div>
 
@@ -94,10 +131,19 @@
 
                 <form id="campingForm" class="space-y-4">
                     
-                    <!-- 1. Data Pemesan & Sekolah -->
+                    <!-- 1. Data Pemesan & Pemilihan Zona -->
                     <div class="card-box p-4 rounded-xl text-slate-800 space-y-3">
                         <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-100/80 px-2.5 py-1 rounded w-fit">
-                            <span>1</span> DATA PEMESAN & SEKOLAH
+                            <span>1</span> DATA PEMESAN & PILIH ZONA
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Zona Perkemahan</label>
+                            <select id="pilihZona" required class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none font-bold text-emerald-800">
+                                <option value="Zona A">Zona A</option>
+                                <option value="Zona B">Zona B</option>
+                                <option value="Zona C">Zona C</option>
+                                <option value="Zona Wisata">Zona Wisata</option>
+                            </select>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Pembooking</label>
@@ -118,6 +164,7 @@
                         <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-100/80 px-2.5 py-1 rounded w-fit">
                             <span>2</span> JADWAL KEGIATAN
                         </div>
+                        <p class="text-[11px] text-amber-700 bg-amber-50 p-2 rounded border border-amber-200">ℹ️ *Catatan: Tanggal mulai di zona yang sama diizinkan bertepatan dengan tanggal selesai sekolah lain di zona tersebut.*</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Mulai</label>
@@ -129,7 +176,7 @@
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Perkiraan Jumlah Siswa</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Perkiraan Jumlah Peserta / Siswa</label>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                                 <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="jumlahSiswa" value="Di bawah 50" class="text-emerald-600"> Di bawah 50</label>
                                 <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="jumlahSiswa" value="50 s.d. 100" class="text-emerald-600"> 50 s.d. 100</label>
@@ -137,8 +184,8 @@
                                 <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="jumlahSiswa" value="200 s.d. 300" class="text-emerald-600"> 200 s.d. 300</label>
                                 <div class="col-span-full flex items-center gap-2 mt-1">
                                     <input type="radio" name="jumlahSiswa" value="Lainnya" id="radioLainnya" class="text-emerald-600">
-                                    <span>300 s.d. Isi Sendiri:</span>
-                                    <input type="number" id="jumlahCustom" placeholder="Jumlah" class="w-20 px-2 py-0.5 border border-slate-300 rounded text-xs"> Orang
+                                    <span>Atau Isi Angka Pasti Peserta:</span>
+                                    <input type="number" id="jumlahCustom" placeholder="Cth: 150" class="w-24 px-2 py-0.5 border border-slate-300 rounded text-xs"> Orang
                                 </div>
                             </div>
                         </div>
@@ -166,34 +213,17 @@
                                 <label class="flex items-center gap-1.5 font-medium"><input type="checkbox" id="checkKayu" class="text-emerald-600"> Kayu Bakar</label>
                                 <input type="number" id="jmlKayu" placeholder="m³" min="1" class="w-16 px-1.5 py-0.5 border border-slate-300 rounded text-xs">
                             </div>
-                            <div class="flex items-center justify-between bg-emerald-50/60 p-2 rounded border border-emerald-200">
-                                <label class="flex items-center gap-1.5 font-medium"><input type="checkbox" id="checkSound" class="text-emerald-600"> Sound System</label>
-                                <input type="text" id="ketSound" placeholder="Paket" class="w-20 px-1.5 py-0.5 border border-slate-300 rounded text-xs">
-                            </div>
-                            <div class="flex items-center justify-between bg-emerald-50/60 p-2 rounded border border-emerald-200">
-                                <label class="flex items-center gap-1.5 font-medium"><input type="checkbox" id="checkCatering" class="text-emerald-600"> Catering</label>
-                                <input type="number" id="jmlCatering" placeholder="Porsi" min="1" class="w-16 px-1.5 py-0.5 border border-slate-300 rounded text-xs">
-                            </div>
                         </div>
                     </div>
 
-                    <!-- 4. Pembayaran DP Booking (TIDAK WAJIB / OPSIONAL) -->
+                    <!-- 4. Pembayaran DP Booking -->
                     <div class="card-box p-4 rounded-xl text-slate-800 space-y-3">
                         <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-100/80 px-2.5 py-1 rounded w-fit">
-                            <span>4</span> PEMBAYARAN DP BOOKING <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-200 px-1.5 py-0.5 rounded">OPSIONAL (Bisa Dikosongkan)</span>
+                            <span>4</span> PEMBAYARAN DP BOOKING <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-200 px-1.5 py-0.5 rounded">OPSIONAL</span>
                         </div>
-                        <p class="text-[11px] text-slate-500">Anda dapat langsung mengirim formulir pendaftaran tanpa harus mengisi pembayaran DP terlebih dahulu.</p>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal DP yang Dibayarkan (Opsional)</label>
-                            <input type="text" id="nominalDp" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Contoh: Rp 500.000 (Opsional)">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Metode Pembayaran (Opsional)</label>
-                            <select id="metodeBayar" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                                <option value="Belum Ditentukan">Belum Ditentukan / Bayar Nanti</option>
-                                <option value="Transfer Bank">Transfer Bank</option>
-                                <option value="Bayar Tunai">Bayar Tunai / Cash di Lokasi</option>
-                            </select>
+                            <input type="text" id="nominalDp" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Contoh: Rp 500.000">
                         </div>
                     </div>
 
@@ -206,21 +236,40 @@
 
         </div>
 
-        <!-- ================= VIEW 2: PANEL ADMIN (MANAJEMEN SEKOLAH & UBAH JADWAL) ================= -->
+        <!-- ================= VIEW 2: PANEL ADMIN ================= -->
         <div id="sectionAdmin" class="hidden wood-board p-6 rounded-2xl text-white space-y-6">
             <div class="border-b border-amber-800 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                     <h2 class="text-xl font-bold flex items-center gap-2">
                         <span>⚙️</span> Panel Pengelola / Admin Buper
                     </h2>
-                    <p class="text-xs text-amber-200/80 mt-1">Pantau jadwal sekolah yang masuk, ubah jadwal (reschedule), atau batalkan.</p>
+                    <p class="text-xs text-amber-200/80 mt-1">Kelola jadwal per zona, pantau notifikasi irisan tanggal, dan atur pemesanan.</p>
+                </div>
+            </div>
+
+            <!-- AREA NOTIFIKASI ADMIN -->
+            <div id="adminNotificationArea" class="hidden bg-red-950/80 border-2 border-red-500 p-4 rounded-xl space-y-2">
+                <div class="flex items-center gap-2 text-red-200 font-bold text-xs uppercase tracking-wide">
+                    <span>⚠️</span> Pemberitahuan Penting: Jadwal Beririsan Tanggal Akhir per Zona
+                </div>
+                <div id="adminNotificationContent" class="text-xs text-red-100 space-y-1">
+                    <!-- Diisi lewat JS -->
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Tambah / Input Booking Baru (Kiri / 5 Kolom) -->
+                <!-- Input Booking Baru (Kiri / 5 Kolom) -->
                 <div class="lg:col-span-5 card-box p-5 rounded-xl text-slate-800 space-y-4">
-                    <h3 class="text-sm font-bold text-emerald-900 border-b pb-2">➕ Input Jadwal Sekolah Baru</h3>
+                    <h3 class="text-sm font-bold text-emerald-900 border-b pb-2">➕ Input Jadwal Baru (Admin)</h3>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Zona</label>
+                        <select id="adminZona" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none font-bold text-emerald-800">
+                            <option value="Zona A">Zona A</option>
+                            <option value="Zona B">Zona B</option>
+                            <option value="Zona C">Zona C</option>
+                            <option value="Zona Wisata">Zona Wisata</option>
+                        </select>
+                    </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah / Instansi</label>
                         <input type="text" id="adminNamaSekolah" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: SMAN 1 Bandung">
@@ -235,8 +284,12 @@
                             <input type="date" id="adminTglSelesai" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                         </div>
                     </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Peserta</label>
+                        <input type="number" id="adminJumlahPeserta" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: 100">
+                    </div>
                     <button onclick="addNewBooking()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 rounded-lg text-xs transition shadow">
-                        Simpan ke Kalender & Daftar Sekolah
+                        Simpan Jadwal Zona
                     </button>
                 </div>
 
@@ -244,14 +297,65 @@
                 <div class="lg:col-span-7 card-box p-5 rounded-xl text-slate-800 space-y-4 flex flex-col justify-between">
                     <div>
                         <h3 class="text-sm font-bold text-emerald-900 border-b pb-2 flex items-center justify-between">
-                            <span>🏫 Daftar Sekolah & Jadwal Aktif</span>
-                            <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded text-slate-600 font-normal">Total: <span id="totalBookingsCount">0</span> Jadwal</span>
+                            <span>🏫 Daftar Jadwal Semua Zona</span>
+                            <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded text-slate-600 font-normal">Total: <span id="totalBookingsCount">0</span></span>
                         </h3>
-                        <p class="text-[11px] text-slate-500 mt-1">Anda dapat melakukan <b>Ubah Jadwal (Reschedule)</b> atau <b>Batalkan</b> pada daftar di bawah.</p>
-                        
-                        <div id="adminBookingList" class="space-y-3 mt-3 max-h-72 overflow-y-auto pr-1">
-                            <!-- Di-generate otomatis lewat JS -->
+                        <div id="adminBookingList" class="space-y-3 mt-3 max-h-80 overflow-y-auto pr-1">
+                            <!-- Di-generate lewat JS -->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 3: STATISTIK & DIAGRAM DONAT (ZONA & PESERTA) ================= -->
+        <div id="sectionStats" class="hidden wood-board p-6 rounded-2xl text-white space-y-6">
+            <div class="border-b border-amber-800 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <span>📊</span> Dashboard Statistik Bulanan & Zona
+                    </h2>
+                    <p class="text-xs text-amber-200/80 mt-1">Analisis persentase zona terboking dan jumlah peserta dalam bentuk diagram donat.</p>
+                </div>
+                <!-- Filter Bulan & Tahun untuk Diagram -->
+                <div class="flex gap-2">
+                    <select id="statMonth" onchange="renderCharts()" class="px-2 py-1.5 text-xs bg-amber-950 text-amber-100 border border-amber-700 rounded-lg focus:outline-none">
+                        <option value="0">Januari</option>
+                        <option value="1">Februari</option>
+                        <option value="2">Maret</option>
+                        <option value="3">April</option>
+                        <option value="4">Mei</option>
+                        <option value="5">Juni</option>
+                        <option value="6">Juli</option>
+                        <option value="7">Agustus</option>
+                        <option value="8">September</option>
+                        <option value="9">Oktober</option>
+                        <option value="10">November</option>
+                        <option value="11">Desember</option>
+                    </select>
+                    <select id="statYear" onchange="renderCharts()" class="px-2 py-1.5 text-xs bg-amber-950 text-amber-100 border border-amber-700 rounded-lg focus:outline-none">
+                        <!-- Di-generate lewat JS -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Kontainer Diagram Donat -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Donat 1: Persentase Hari Terboking per Zona -->
+                <div class="card-box p-5 rounded-2xl text-slate-800 flex flex-col items-center">
+                    <h3 class="text-sm font-bold text-emerald-900 mb-2">Persentase Hari Terboking per Zona</h3>
+                    <p class="text-[11px] text-slate-500 mb-4 text-center">Proporsi hari yang terisi pada bulan terpilih.</p>
+                    <div class="w-full max-w-[280px] h-[280px] relative flex items-center justify-center">
+                        <canvas id="chartZonaDays"></canvas>
+                    </div>
+                </div>
+
+                <!-- Donat 2: Persentase Jumlah Peserta per Zona -->
+                <div class="card-box p-5 rounded-2xl text-slate-800 flex flex-col items-center">
+                    <h3 class="text-sm font-bold text-emerald-900 mb-2">Persentase Jumlah Peserta per Zona</h3>
+                    <p class="text-[11px] text-slate-500 mb-4 text-center">Proporsi total peserta/siswa berkemah pada bulan terpilih.</p>
+                    <div class="w-full max-w-[280px] h-[280px] relative flex items-center justify-center">
+                        <canvas id="chartZonaPeserta"></canvas>
                     </div>
                 </div>
             </div>
@@ -266,6 +370,10 @@
                 <span>🔄</span> Ubah Jadwal (Reschedule)
             </h3>
             <input type="hidden" id="editIndex">
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Zona</label>
+                <input type="text" id="editZona" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-slate-100 font-bold" readonly>
+            </div>
             <div>
                 <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah</label>
                 <input type="text" id="editSekolah" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-slate-100" readonly>
@@ -282,19 +390,19 @@
             </div>
             <div class="flex gap-2 pt-2">
                 <button onclick="closeRescheduleModal()" class="w-1/2 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-2 rounded-lg text-xs transition">Batal</button>
-                <button onclick="saveReschedule()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-xs transition">Simpan Perubahan</button>
+                <button onclick="saveReschedule()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-xs transition">Simpan</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL POPUP KONFIRMASI SUKSES MENDAFTAR -->
+    <!-- MODAL POPUP KONFIRMASI SUKSES -->
     <div id="successModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3">
         <div class="card-box w-full max-w-md p-6 rounded-2xl shadow-2xl space-y-4 text-slate-800 text-center">
             <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">✓</div>
-            <h3 class="text-lg font-bold text-emerald-900">Pendaftaran Berhasil Dikirim!</h3>
-            <p class="text-xs text-slate-600">Data pemesanan area perkemahan Anda telah tercatat di sistem kami.</p>
+            <h3 class="text-lg font-bold text-emerald-900">Pendaftaran Zona Berhasil!</h3>
+            <p class="text-xs text-slate-600">Jadwal perkemahan Anda telah tercatat pada zona yang dipilih.</p>
             <div id="successDetails" class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-left text-xs space-y-1">
-                <!-- Diisi via JavaScript -->
+                <!-- Diisi via JS -->
             </div>
             <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow">
                 Tutup & Selesai
@@ -302,22 +410,110 @@
         </div>
     </div>
 
-    <!-- Skrip Logika Kalender, Admin, Reschedule, & Konfirmasi Sukses -->
+    <!-- SCRIPT LOGIKA MULTI-ZONA, KALENDER, & CHART.JS -->
     <script>
-        // Data Jadwal Terboking & Sekolah (Disimpan di localStorage)
-        let bookedList = JSON.parse(localStorage.getItem('buperBookedList')) || [
-            { sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07" },
-            { sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-15", tglSelesai: "2026-07-17" }
+        // Data Default dengan 4 Zona
+        let bookedList = JSON.parse(localStorage.getItem('buperBookedListMulti')) || [
+            { zona: "Zona A", sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120 },
+            { zona: "Zona B", sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 85 },
+            { zona: "Zona Wisata", sekolah: "MAN 2 Majalengka", tglMulai: "2026-07-15", tglSelesai: "2026-07-18", peserta: 200 }
         ];
 
         function saveData() {
-            localStorage.setItem('buperBookedList', JSON.stringify(bookedList));
+            localStorage.setItem('buperBookedListMulti', JSON.stringify(bookedList));
         }
 
-        // Ambil daftar tanggal tunggal merah dari rentang mulai s.d. selesai untuk kalender
-        function getActiveDatesArray() {
+        let chartDaysInstance = null;
+        let chartPesertaInstance = null;
+
+        function initDropdowns() {
+            const yearSelects = [document.getElementById('selectYear'), document.getElementById('statYear')];
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth();
+
+            yearSelects.forEach(sel => {
+                if(!sel) return;
+                sel.innerHTML = '';
+                for (let y = currentYear - 1; y <= currentYear + 3; y++) {
+                    let opt = document.createElement('option');
+                    opt.value = y;
+                    opt.innerText = y;
+                    if(y === currentYear) opt.selected = true;
+                    sel.appendChild(opt);
+                }
+            });
+
+            document.getElementById('selectMonth').value = currentMonth;
+            document.getElementById('statMonth').value = currentMonth;
+
+            renderCalendar();
+            checkAndGenerateNotifications();
+        }
+
+        // Cek konflik hanya dalam ZONA YANG SAMA
+        function checkBookingConflict(zona, tglMulai, tglSelesai, excludeIndex = -1) {
+            let startNew = new Date(tglMulai);
+            let endNew = new Date(tglSelesai);
+
+            for (let i = 0; i < bookedList.length; i++) {
+                if (i === excludeIndex) continue;
+                let item = bookedList[i];
+                if (item.zona !== zona) continue; // Beda zona tidak bentrok
+
+                let startExisting = new Date(item.tglMulai);
+                let endExisting = new Date(item.tglSelesai);
+
+                // Tanggal baru mulai tepat saat tanggal selesai sekolah lain -> Diizinkan (overlap ujung)
+                if (startNew > startExisting && startNew < endExisting) {
+                    return { conflict: true, message: `Bentrok di [${zona}] dengan "${item.sekolah}" (${item.tglMulai} s.d. ${item.tglSelesai}).` };
+                }
+                if (startNew <= startExisting && endNew >= endExisting && !(startNew.getTime() === endExisting.getTime())) {
+                    if (endNew > startExisting) {
+                        return { conflict: true, message: `Bentrok rentang penuh di [${zona}] dengan "${item.sekolah}".` };
+                    }
+                }
+            }
+            return { conflict: false };
+        }
+
+        // Notifikasi Admin untuk Zona
+        function getOverlapNotifications() {
+            let notifications = [];
+            for (let i = 0; i < bookedList.length; i++) {
+                for (let j = 0; j < bookedList.length; j++) {
+                    if (i === j) continue;
+                    let itemA = bookedList[i];
+                    let itemB = bookedList[j];
+                    
+                    if (itemA.zona === itemB.zona && itemA.tglMulai === itemB.tglSelesai) {
+                        notifications.push(`Di <b>${itemA.zona}</b>: <b>${itemA.sekolah}</b> mulai tgl <b>${itemA.tglMulai}</b>, bertepatan dengan kepulangan <b>${itemB.sekolah}</b>.`);
+                    }
+                }
+            }
+            return [...new Set(notifications)];
+        }
+
+        function checkAndGenerateNotifications() {
+            let notifs = getOverlapNotifications();
+            let area = document.getElementById('adminNotificationArea');
+            let content = document.getElementById('adminNotificationContent');
+            let badge = document.getElementById('adminBadge');
+
+            if (notifs.length > 0) {
+                area.classList.remove('hidden');
+                badge.classList.remove('hidden');
+                content.innerHTML = notifs.map(n => `<p>• ${n}</p>`).join('');
+            } else {
+                area.classList.add('hidden');
+                badge.classList.add('hidden');
+                content.innerHTML = '';
+            }
+        }
+
+        // Ambil tanggal terisi khusus ZONA yang dipilih pada filter kalender
+        function getActiveDatesArrayForZona(targetZona) {
             let dates = [];
-            bookedList.forEach(item => {
+            bookedList.filter(item => item.zona === targetZona).forEach(item => {
                 let currDate = new Date(item.tglMulai);
                 let endDate = new Date(item.tglSelesai);
                 
@@ -336,17 +532,18 @@
             return dates;
         }
 
-        // Render Kalender Sisi User
+        // Render Kalender Sesuai Zona Filter
         function renderCalendar() {
             const calendarDaysEl = document.getElementById('calendarDays');
             calendarDaysEl.innerHTML = '';
 
-            const year = 2026;
-            const month = 6; // Juli
+            const selectedZona = document.getElementById('calendarZonaFilter').value;
+            const selectedMonth = parseInt(document.getElementById('selectMonth').value);
+            const selectedYear = parseInt(document.getElementById('selectYear').value);
             
-            const firstDayIndex = new Date(year, month, 1).getDay();
-            const totalDays = new Date(year, month + 1, 0).getDate();
-            const bookedDates = getActiveDatesArray();
+            const firstDayIndex = new Date(selectedYear, selectedMonth, 1).getDay();
+            const totalDays = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+            const bookedDates = getActiveDatesArrayForZona(selectedZona);
 
             for (let i = 0; i < firstDayIndex; i++) {
                 const emptyDiv = document.createElement('div');
@@ -356,8 +553,9 @@
 
             for (let day = 1; day <= totalDays; day++) {
                 const dayDiv = document.createElement('div');
-                const formattedDay = day < 10 ? '0' + day : day;
-                const dateStr = `${year}-07-${formattedDay}`;
+                const formattedMonth = String(selectedMonth + 1).padStart(2, '0');
+                const formattedDay = String(day).padStart(2, '0');
+                const dateStr = `${selectedYear}-${formattedMonth}-${formattedDay}`;
                 
                 let isBooked = bookedDates.includes(dateStr);
                 
@@ -367,19 +565,24 @@
                         : 'bg-emerald-950/40 text-emerald-100 hover:bg-emerald-800'
                 }`;
                 dayDiv.innerText = day;
-                if(isBooked) dayDiv.title = "Sudah Terboking";
+                if(isBooked) dayDiv.title = `Terboking di ${selectedZona}`;
                 calendarDaysEl.appendChild(dayDiv);
             }
         }
 
-        // Render Daftar Manajemen Admin
+        function changeCalendarMonth() {
+            renderCalendar();
+        }
+
+        // Render Panel Admin
         function renderAdminList() {
             const listEl = document.getElementById('adminBookingList');
             document.getElementById('totalBookingsCount').innerText = bookedList.length;
             listEl.innerHTML = '';
 
             if(bookedList.length === 0) {
-                listEl.innerHTML = '<p class="text-xs text-slate-400 italic text-center py-4">Belum ada jadwal sekolah yang terdaftar.</p>';
+                listEl.innerHTML = '<p class="text-xs text-slate-400 italic text-center py-4">Belum ada jadwal terdaftar.</p>';
+                checkAndGenerateNotifications();
                 return;
             }
 
@@ -388,26 +591,31 @@
                 itemDiv.className = "bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs";
                 itemDiv.innerHTML = `
                     <div>
-                        <p class="font-bold text-slate-800 text-sm">🏫 ${item.sekolah}</p>
+                        <span class="bg-emerald-800 text-white px-2 py-0.5 rounded text-[10px] font-bold">${item.zona}</span>
+                        <p class="font-bold text-slate-800 text-sm mt-1">🏫 ${item.sekolah} (${item.peserta || 0} Peserta)</p>
                         <p class="text-slate-500 mt-0.5">📅 <b>${item.tglMulai}</b> s.d. <b>${item.tglSelesai}</b></p>
                     </div>
                     <div class="flex items-center gap-1.5 self-end sm:self-center">
-                        <button onclick="openRescheduleModal(${index})" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1.5 rounded font-bold transition">Ubah Jadwal</button>
-                        <button onclick="deleteBooking(${index})" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded font-bold transition">Batalkan</button>
+                        <button onclick="openRescheduleModal(${index})" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1.5 rounded font-bold transition">Ubah</button>
+                        <button onclick="deleteBooking(${index})" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded font-bold transition">Hapus</button>
                     </div>
                 `;
                 listEl.appendChild(itemDiv);
             });
+
+            checkAndGenerateNotifications();
         }
 
-        // Fungsi Tambah Jadwal Baru oleh Admin
+        // Admin Tambah Booking
         function addNewBooking() {
+            let zona = document.getElementById('adminZona').value;
             let sekolah = document.getElementById('adminNamaSekolah').value.trim();
             let tglMulai = document.getElementById('adminTglMulai').value;
             let tglSelesai = document.getElementById('adminTglSelesai').value;
+            let peserta = parseInt(document.getElementById('adminJumlahPeserta').value) || 50;
 
             if(!sekolah || !tglMulai || !tglSelesai) {
-                alert('Mohon isi nama sekolah dan rentang tanggal dengan lengkap!');
+                alert('Semua field wajib diisi!');
                 return;
             }
             if(tglMulai > tglSelesai) {
@@ -415,7 +623,13 @@
                 return;
             }
 
-            bookedList.push({ sekolah, tglMulai, tglSelesai });
+            let check = checkBookingConflict(zona, tglMulai, tglSelesai);
+            if(check.conflict) {
+                alert('Gagal Menyimpan!\n' + check.message);
+                return;
+            }
+
+            bookedList.push({ zona, sekolah, tglMulai, tglSelesai, peserta });
             saveData();
             renderCalendar();
             renderAdminList();
@@ -423,13 +637,12 @@
             document.getElementById('adminNamaSekolah').value = '';
             document.getElementById('adminTglMulai').value = '';
             document.getElementById('adminTglSelesai').value = '';
-            alert('Jadwal sekolah berhasil ditambahkan dan kalender diperbarui!');
+            document.getElementById('adminJumlahPeserta').value = '';
+            alert('Jadwal zona berhasil ditambahkan!');
         }
 
-        // Fungsi Hapus / Batalkan Jadwal
         function deleteBooking(index) {
-            let item = bookedList[index];
-            if(confirm(`Yakin ingin membatalkan jadwal perkemahan untuk "${item.sekolah}"?`)) {
+            if(confirm(`Yakin ingin menghapus jadwal ini?`)) {
                 bookedList.splice(index, 1);
                 saveData();
                 renderCalendar();
@@ -437,33 +650,34 @@
             }
         }
 
-        // Buka Modal Reschedule (Ubah Jadwal)
         function openRescheduleModal(index) {
             let item = bookedList[index];
             document.getElementById('editIndex').value = index;
+            document.getElementById('editZona').value = item.zona;
             document.getElementById('editSekolah').value = item.sekolah;
             document.getElementById('editTglMulai').value = item.tglMulai;
             document.getElementById('editTglSelesai').value = item.tglSelesai;
             document.getElementById('rescheduleModal').classList.remove('hidden');
         }
 
-        // Tutup Modal Reschedule
         function closeRescheduleModal() {
             document.getElementById('rescheduleModal').classList.add('hidden');
         }
 
-        // Simpan Perubahan Jadwal (Reschedule)
         function saveReschedule() {
-            let index = document.getElementById('editIndex').value;
+            let index = parseInt(document.getElementById('editIndex').value);
+            let item = bookedList[index];
             let newMulai = document.getElementById('editTglMulai').value;
             let newSelesai = document.getElementById('editTglSelesai').value;
 
-            if(!newMulai || !newSelesai) {
-                alert('Tanggal mulai dan selesai wajib diisi!');
+            if(!newMulai || !newSelesai || newMulai > newSelesai) {
+                alert('Rentang tanggal tidak valid!');
                 return;
             }
-            if(newMulai > newSelesai) {
-                alert('Tanggal mulai tidak boleh lebih besar dari tanggal selesai!');
+
+            let check = checkBookingConflict(item.zona, newMulai, newSelesai, index);
+            if(check.conflict) {
+                alert('Gagal Mengubah Jadwal!\n' + check.message);
                 return;
             }
 
@@ -474,68 +688,162 @@
             renderCalendar();
             renderAdminList();
             closeRescheduleModal();
-            alert('Jadwal berhasil diperbarui (Reschedule sukses)!');
+            alert('Jadwal berhasil diperbarui!');
         }
 
-        // Fungsi Pengalihan Tampilan (User / Admin)
+        // ================= RENDER DIAGRAM DONAT (CHART.JS) =================
+        function renderCharts() {
+            const m = parseInt(document.getElementById('statMonth').value);
+            const y = parseInt(document.getElementById('statYear').value);
+
+            const zones = ["Zona A", "Zona B", "Zona C", "Zona Wisata"];
+            let daysCount = { "Zona A": 0, "Zona B": 0, "Zona C": 0, "Zona Wisata": 0 };
+            let pesertaCount = { "Zona A": 0, "Zona B": 0, "Zona C": 0, "Zona Wisata": 0 };
+
+            // Hitung statistik pada bulan & tahun terpilih
+            bookedList.forEach(item => {
+                let curr = new Date(item.tglMulai);
+                let end = new Date(item.tglSelesai);
+                let pPerDay = (item.peserta || 50) / Math.max(1, Math.round((end - curr)/(1000*3600*24)) + 1);
+
+                while(curr <= end) {
+                    if(curr.getMonth() === m && curr.getFullYear() === y) {
+                        if(daysCount[item.zona] !== undefined) {
+                            daysCount[item.zona] += 1;
+                        }
+                    }
+                    curr.setDate(curr.getDate() + 1);
+                }
+
+                if(new Date(item.tglMulai).getFullYear() === y && new Date(item.tglMulai).getMonth() === m) {
+                    if(pesertaCount[item.zona] !== undefined) {
+                        pesertaCount[item.zona] += (item.peserta || 50);
+                    }
+                }
+            });
+
+            let daysDataArr = zones.map(z => daysCount[z]);
+            let pesertaDataArr = zones.map(z => pesertaCount[z]);
+
+            // Chart 1: Hari Terboking per Zona
+            const ctxDays = document.getElementById('chartZonaDays').getContext('2d');
+            if(chartDaysInstance) chartDaysInstance.destroy();
+            chartDaysInstance = new Chart(ctxDays, {
+                type: 'doughnut',
+                data: {
+                    labels: zones,
+                    datasets: [{
+                        data: daysDataArr,
+                        backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ec4899'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+                }
+            });
+
+            // Chart 2: Jumlah Peserta per Zona
+            const ctxPeserta = document.getElementById('chartZonaPeserta').getContext('2d');
+            if(chartPesertaInstance) chartPesertaInstance.destroy();
+            chartPesertaInstance = new Chart(ctxPeserta, {
+                type: 'doughnut',
+                data: {
+                    labels: zones,
+                    datasets: [{
+                        data: pesertaDataArr,
+                        backgroundColor: ['#059669', '#2563eb', '#d97706', '#db2777'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+                }
+            });
+        }
+
+        // Pengalihan Tampilan Menu
         function switchView(view) {
             const secUser = document.getElementById('sectionUser');
             const secAdmin = document.getElementById('sectionAdmin');
+            const secStats = document.getElementById('sectionStats');
             const btnUser = document.getElementById('btnViewUser');
             const btnAdmin = document.getElementById('btnViewAdmin');
+            const btnStats = document.getElementById('btnViewStats');
+
+            secUser.classList.add('hidden');
+            secAdmin.classList.add('hidden');
+            secStats.classList.add('hidden');
+            btnUser.className = "px-3 py-2 text-xs font-bold rounded-lg transition text-emerald-200 hover:text-white";
+            btnAdmin.className = "px-3 py-2 text-xs font-bold rounded-lg transition text-amber-200 hover:text-white relative";
+            btnStats.className = "px-3 py-2 text-xs font-bold rounded-lg transition text-amber-200 hover:text-white";
 
             if(view === 'user') {
                 secUser.classList.remove('hidden');
-                secAdmin.classList.add('hidden');
-                btnUser.className = "px-4 py-2 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow";
-                btnAdmin.className = "px-4 py-2 text-xs font-bold rounded-lg transition text-amber-200 hover:text-white";
+                btnUser.className = "px-3 py-2 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow";
                 renderCalendar();
-            } else {
-                secUser.classList.add('hidden');
+            } else if(view === 'admin') {
                 secAdmin.classList.remove('hidden');
-                btnAdmin.className = "px-4 py-2 text-xs font-bold rounded-lg transition bg-amber-700 text-white shadow";
-                btnUser.className = "px-4 py-2 text-xs font-bold rounded-lg transition text-emerald-200 hover:text-white";
+                btnAdmin.className = "px-3 py-2 text-xs font-bold rounded-lg transition bg-amber-700 text-white shadow relative";
                 renderAdminList();
+            } else if(view === 'stats') {
+                secStats.classList.remove('hidden');
+                btnStats.className = "px-3 py-2 text-xs font-bold rounded-lg transition bg-amber-700 text-white shadow";
+                renderCharts();
             }
         }
 
-        // Inisialisasi awal
-        renderCalendar();
+        // Jalankan Inisialisasi
+        initDropdowns();
 
-        // Proses Pendaftaran Formulir (Munculkan Modal Sukses di Layar)
+        // Pendaftaran Publik
         document.getElementById('campingForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
+            let zona = document.getElementById('pilihZona').value;
             let nama = document.getElementById('namaPembooking').value;
             let sekolah = document.getElementById('namaSekolah').value;
             let telp = document.getElementById('noTelepon').value;
             let tglMulai = document.getElementById('tglMulai').value;
             let tglSelesai = document.getElementById('tglSelesai').value;
-            
-            let jumlahSiswa = "Belum diisi";
+
+            if(tglMulai > tglSelesai) {
+                alert('Tanggal mulai tidak boleh melebihi tanggal selesai!');
+                return;
+            }
+
+            let peserta = 50;
             let selectedSiswa = document.querySelector('input[name="jumlahSiswa"]:checked');
             if(selectedSiswa) {
                 if(selectedSiswa.value === "Lainnya") {
-                    let customVal = document.getElementById('jumlahCustom').value;
-                    jumlahSiswa = (customVal ? customVal : "Banyak") + " orang";
-                } else {
-                    jumlahSiswa = selectedSiswa.value + " orang";
-                }
+                    let customVal = parseInt(document.getElementById('jumlahCustom').value);
+                    peserta = customVal ? customVal : 50;
+                } else if(selectedSiswa.value.includes("Di bawah 50")) peserta = 40;
+                else if(selectedSiswa.value.includes("50 s.d. 100")) peserta = 80;
+                else if(selectedSiswa.value.includes("100 s.d. 200")) peserta = 150;
+                else if(selectedSiswa.value.includes("200 s.d. 300")) peserta = 250;
             }
 
-            let nominalDp = document.getElementById('nominalDp').value.trim();
-            if(nominalDp === "") nominalDp = "Belum diisi / Bayar Nanti";
-            
-            let metodeBayar = document.getElementById('metodeBayar').value;
+            let check = checkBookingConflict(zona, tglMulai, tglSelesai);
+            if(check.conflict) {
+                alert(`Maaf, jadwal di ${zona} tidak tersedia.\nAlasan: ` + check.message);
+                return;
+            }
 
-            // Tampilkan Detail di Modal Sukses
+            bookedList.push({ zona, sekolah, tglMulai, tglSelesai, peserta });
+            saveData();
+            renderCalendar();
+
             let detailsHtml = `
+                <p><b>Zona:</b> ${zona}</p>
                 <p><b>Pembooking:</b> ${nama}</p>
                 <p><b>Sekolah:</b> ${sekolah}</p>
-                <p><b>No. Telp/HP:</b> ${telp}</p>
                 <p><b>Tanggal:</b> ${tglMulai} s.d. ${tglSelesai}</p>
-                <p><b>Jumlah Siswa:</b> ${jumlahSiswa}</p>
-                <p><b>DP Booking:</b> ${nominalDp} (${metodeBayar})</p>
+                <p><b>Estimasi Peserta:</b> ${peserta} orang</p>
             `;
             document.getElementById('successDetails').innerHTML = detailsHtml;
             document.getElementById('successModal').classList.remove('hidden');
