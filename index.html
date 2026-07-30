@@ -65,7 +65,7 @@
                             <span>📅</span> Kalender Per Zona
                         </h2>
                     </div>
-                    <p class="text-xs text-amber-100/80 mb-2">Pilih Zona & Bulan untuk melihat jadwal:</p>
+                    <p class="text-xs text-amber-100/80 mb-2">Pilih Zona & Bulan untuk melihat jadwal terkonfirmasi:</p>
 
                     <!-- Pilihan Zona untuk Kalender -->
                     <div class="mb-2">
@@ -277,7 +277,7 @@
                     <h2 class="text-xl font-bold flex items-center gap-2">
                         <span>⚙️</span> Panel Pengelola / Admin Buper
                     </h2>
-                    <p class="text-xs text-amber-200/80 mt-1">Kelola jadwal per zona, pantau notifikasi irisan tanggal, dan atur pemesanan.</p>
+                    <p class="text-xs text-amber-200/80 mt-1">Konfirmasi pendaftaran masuk, ubah no telpon, reschedule jadwal, dan pantau zona.</p>
                 </div>
             </div>
 
@@ -291,7 +291,7 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <div class="lg:col-span-5 card-box p-5 rounded-xl text-slate-800 space-y-4">
-                    <h3 class="text-sm font-bold text-emerald-900 border-b pb-2">➕ Input Jadwal Baru (Admin)</h3>
+                    <h3 class="text-sm font-bold text-emerald-900 border-b pb-2">➕ Input Jadwal Langsung (Admin)</h3>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1.5">Pilih Zona (Bisa centang lebih dari satu)</label>
                         <div class="grid grid-cols-2 gap-2 text-xs font-bold text-emerald-900">
@@ -324,21 +324,25 @@
                         </div>
                     </div>
                     <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">No Telepon / WhatsApp</label>
+                        <input type="tel" id="adminNoTelepon" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: 081234567890">
+                    </div>
+                    <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Peserta</label>
                         <input type="number" id="adminJumlahPeserta" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: 240">
                     </div>
                     <button onclick="addNewBooking()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 rounded-lg text-xs transition shadow">
-                        Simpan Jadwal Zona
+                        Simpan & Konfirmasi Otomatis
                     </button>
                 </div>
 
                 <div class="lg:col-span-7 card-box p-5 rounded-xl text-slate-800 space-y-4 flex flex-col justify-between">
                     <div>
                         <h3 class="text-sm font-bold text-emerald-900 border-b pb-2 flex items-center justify-between">
-                            <span>🏫 Daftar Jadwal Semua Zona</span>
+                            <span>🏫 Daftar Pendaftaran & Jadwal Zona</span>
                             <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded text-slate-600 font-normal">Total Baris: <span id="totalBookingsCount">0</span></span>
                         </h3>
-                        <div id="adminBookingList" class="space-y-3 mt-3 max-h-80 overflow-y-auto pr-1"></div>
+                        <div id="adminBookingList" class="space-y-3 mt-3 max-h-[420px] overflow-y-auto pr-1"></div>
                     </div>
                 </div>
             </div>
@@ -351,7 +355,7 @@
                     <h2 class="text-xl font-bold flex items-center gap-2">
                         <span>📊</span> Perbandingan Peserta Antar Zona
                     </h2>
-                    <p class="text-xs text-amber-200/80 mt-1">Analisis mendalam jumlah peserta berkemah tiap Hari, Minggu, Bulan, dan Tahun (distribusi adil multi-zona).</p>
+                    <p class="text-xs text-amber-200/80 mt-1">Analisis mendalam jumlah peserta berkemah tiap Hari, Minggu, Bulan, dan Tahun (hanya menghitung yang sudah dikonfirmasi).</p>
                 </div>
                 <!-- Tahun Global untuk Statistik -->
                 <div class="flex items-center gap-2">
@@ -431,11 +435,11 @@
 
     </div>
 
-    <!-- MODAL POPUP UBAH JADWAL -->
+    <!-- MODAL POPUP UBAH JADWAL & NO TELPON -->
     <div id="rescheduleModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3">
         <div class="card-box w-full max-w-md p-5 rounded-2xl shadow-2xl space-y-4 text-slate-800">
             <h3 class="text-base font-bold text-emerald-900 border-b pb-2 flex items-center gap-2">
-                <span>🔄</span> Ubah Jadwal (Reschedule)
+                <span>🔄</span> Edit Detail & Jadwal Pendaftar
             </h3>
             <input type="hidden" id="editIndex">
             <div>
@@ -443,8 +447,12 @@
                 <input type="text" id="editZona" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-slate-100 font-bold" readonly>
             </div>
             <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah</label>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah / Pembooking</label>
                 <input type="text" id="editSekolah" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-slate-100" readonly>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">No Telepon / WhatsApp Baru</label>
+                <input type="tel" id="editNoTelepon" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Masukkan No Telpon / WA">
             </div>
             <div class="grid grid-cols-2 gap-2">
                 <div>
@@ -458,17 +466,17 @@
             </div>
             <div class="flex gap-2 pt-2">
                 <button onclick="closeRescheduleModal()" class="w-1/2 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-2 rounded-lg text-xs transition">Batal</button>
-                <button onclick="saveReschedule()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-xs transition">Simpan</button>
+                <button onclick="saveReschedule()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-xs transition">Simpan Perubahan</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL POPUP SUKSES -->
+    <!-- MODAL POPUP SUKSES PENDAFTARAN USER -->
     <div id="successModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3">
         <div class="card-box w-full max-w-md p-6 rounded-2xl shadow-2xl space-y-4 text-slate-800 text-center">
-            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">✓</div>
-            <h3 class="text-lg font-bold text-emerald-900">Pendaftaran Zona Berhasil!</h3>
-            <p class="text-xs text-slate-600">Jadwal perkemahan dan permintaan sewa fasilitas Anda telah tercatat.</p>
+            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">⏳</div>
+            <h3 class="text-lg font-bold text-emerald-900">Pendaftaran Berhasil Dikirim!</h3>
+            <p class="text-xs text-slate-600">Pendaftaran Anda berstatus <b>Menunggu Konfirmasi (Pending)</b> oleh Admin Buper sebelum resmi masuk ke kalender.</p>
             <div id="successDetails" class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-left text-xs space-y-1"></div>
             <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow">
                 Tutup & Selesai
@@ -478,27 +486,24 @@
 
     <!-- SCRIPT LOGIKA APLIKASI -->
     <script>
-        let bookedList = JSON.parse(localStorage.getItem('buperBookedListMulti')) || [
-            { zona: ["Zona A"], sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120, alatSewa: [{nama: "Tenda Dome", qty: 10}] },
-            { zona: ["Zona B"], sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 90, alatSewa: [] },
-            { zona: ["Zona C", "Zona Wisata"], sekolah: "MTs Negeri 1 Cirebon", tglMulai: "2026-07-14", tglSelesai: "2026-07-16", peserta: 240, alatSewa: [{nama: "Catering", qty: 240}, {nama: "Sound System", qty: 1}] }
+        let bookedList = JSON.parse(localStorage.getItem('buperBookedListMultiStatus')) || [
+            { zona: ["Zona A"], sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120, telp: "081111222333", status: "Dikonfirmasi", alatSewa: [{nama: "Tenda Dome", qty: 10}] },
+            { zona: ["Zona B"], sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 90, telp: "082222333444", status: "Dikonfirmasi", alatSewa: [] },
+            { zona: ["Zona C", "Zona Wisata"], sekolah: "MTs Negeri 1 Cirebon", tglMulai: "2026-07-14", tglSelesai: "2026-07-16", peserta: 240, telp: "083333444555", status: "Pending", alatSewa: [{nama: "Catering", qty: 240}, {nama: "Sound System", qty: 1}] }
         ];
 
         bookedList = bookedList.map(item => {
-            if (typeof item.zona === 'string') {
-                item.zona = [item.zona];
-            }
-            if (!item.alatSewa) {
-                item.alatSewa = [];
-            }
+            if (typeof item.zona === 'string') item.zona = [item.zona];
+            if (!item.alatSewa) item.alatSewa = [];
+            if (!item.status) item.status = "Dikonfirmasi";
+            if (!item.telp) item.telp = "-";
             return item;
         });
 
         function saveData() {
-            localStorage.setItem('buperBookedListMulti', JSON.stringify(bookedList));
+            localStorage.setItem('buperBookedListMultiStatus', JSON.stringify(bookedList));
         }
 
-        // Fungsi mengaktifkan/menonaktifkan input jumlah alat/fasilitas sewa
         function toggleAlatInput(checkbox) {
             let inputId = 'qty_' + checkbox.value;
             let inputEl = document.getElementById(inputId);
@@ -558,6 +563,8 @@
                 for (let i = 0; i < bookedList.length; i++) {
                     if (i === excludeIndex) continue;
                     let item = bookedList[i];
+                    // Hanya cek bentrok dengan yang statusnya sudah "Dikonfirmasi"
+                    if (item.status !== "Dikonfirmasi") continue;
                     if (!item.zona.includes(z)) continue;
 
                     let startExisting = new Date(item.tglMulai);
@@ -581,7 +588,7 @@
             const zones = ["Zona A", "Zona B", "Zona C", "Zona Wisata"];
             
             zones.forEach(z => {
-                let zoneBookings = bookedList.filter(item => item.zona.includes(z));
+                let zoneBookings = bookedList.filter(item => item.zona.includes(z) && item.status === "Dikonfirmasi");
                 for (let i = 0; i < zoneBookings.length; i++) {
                     for (let j = 0; j < zoneBookings.length; j++) {
                         if (i === j) continue;
@@ -616,7 +623,8 @@
 
         function getActiveDatesArrayForZona(targetZona) {
             let dates = [];
-            bookedList.filter(item => item.zona.includes(targetZona)).forEach(item => {
+            // Kalender hanya menampilkan tanggal dari jadwal yang statusnya "Dikonfirmasi"
+            bookedList.filter(item => item.zona.includes(targetZona) && item.status === "Dikonfirmasi").forEach(item => {
                 let currDate = new Date(item.tglMulai);
                 let endDate = new Date(item.tglSelesai);
                 
@@ -663,7 +671,7 @@
                     isBooked ? 'bg-red-600 text-white font-bold shadow' : 'bg-emerald-950/40 text-emerald-100 hover:bg-emerald-800'
                 }`;
                 dayDiv.innerText = day;
-                if(isBooked) dayDiv.title = `Terboking di ${selectedZona}`;
+                if(isBooked) dayDiv.title = `Terboking terkonfirmasi di ${selectedZona}`;
                 calendarDaysEl.appendChild(dayDiv);
             }
         }
@@ -684,23 +692,42 @@
             bookedList.forEach((item, index) => {
                 let zonaBadges = item.zona.map(z => `<span class="bg-emerald-800 text-white px-2 py-0.5 rounded text-[10px] font-bold mr-1">${z}</span>`).join('');
                 
+                let statusBadge = '';
+                if(item.status === "Dikonfirmasi") {
+                    statusBadge = `<span class="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded text-[10px] font-bold">✓ Dikonfirmasi</span>`;
+                } else if(item.status === "Pending") {
+                    statusBadge = `<span class="bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5 rounded text-[10px] font-bold">⏳ Menunggu Konfirmasi</span>`;
+                } else {
+                    statusBadge = `<span class="bg-red-100 text-red-800 border border-red-300 px-2 py-0.5 rounded text-[10px] font-bold">✕ Dibatalkan</span>`;
+                }
+
                 let alatText = '<span class="text-slate-400 italic">Tidak ada sewa tambahan</span>';
                 if(item.alatSewa && item.alatSewa.length > 0) {
-                    alatText = item.alatSewa.map(a => `<span class="bg-amber-100 text-amber-900 border border-amber-300 px-1.5 py-0.5 rounded text-[10px] font-semibold mr-1">${a.nama} (${a.qty})</span>`).join('');
+                    alatText = item.alatSewa.map(a => `<span class="bg-amber-50 text-amber-900 border border-amber-200 px-1.5 py-0.5 rounded text-[10px] font-semibold mr-1">${a.nama} (${a.qty})</span>`).join('');
                 }
 
                 let itemDiv = document.createElement('div');
-                itemDiv.className = "bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs";
+                itemDiv.className = "bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-col gap-2 text-xs";
                 itemDiv.innerHTML = `
-                    <div>
-                        <div class="mb-1">${zonaBadges}</div>
-                        <p class="font-bold text-slate-800 text-sm">🏫 ${item.sekolah} (${item.peserta || 0} Peserta)</p>
-                        <p class="text-slate-500 mt-0.5">📅 <b>${item.tglMulai}</b> s.d. <b>${item.tglSelesai}</b></p>
-                        <p class="text-slate-600 mt-1">📦 <b>Sewa Fasilitas:</b> ${alatText}</p>
+                    <div class="flex items-start justify-between gap-2">
+                        <div>
+                            <div class="mb-1">${zonaBadges} ${statusBadge}</div>
+                            <p class="font-bold text-slate-800 text-sm">🏫 ${item.sekolah} (${item.peserta || 0} Peserta)</p>
+                            <p class="text-slate-600 mt-0.5">📞 No Telpon / WA: <b>${item.telp}</b></p>
+                            <p class="text-slate-500 mt-0.5">📅 <b>${item.tglMulai}</b> s.d. <b>${item.tglSelesai}</b></p>
+                            <p class="text-slate-600 mt-1">📦 <b>Sewa Fasilitas:</b> ${alatText}</p>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-1.5 self-end sm:self-center">
-                        <button onclick="openRescheduleModal(${index})" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1.5 rounded font-bold transition">Ubah</button>
-                        <button onclick="deleteBooking(${index})" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded font-bold transition">Hapus</button>
+                    <div class="flex flex-wrap items-center justify-between gap-1 pt-2 border-t border-slate-200">
+                        <div class="flex items-center gap-1">
+                            <span class="text-[11px] font-semibold text-slate-500">Ubah Status:</span>
+                            <button onclick="changeStatus(${index}, 'Dikonfirmasi')" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-bold transition text-[10px]">Konfirmasi</button>
+                            <button onclick="changeStatus(${index}, 'Dibatalkan')" class="px-2 py-1 bg-red-600 hover:bg-red-700 text-white rounded font-bold transition text-[10px]">Batalkan</button>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button onclick="openRescheduleModal(${index})" class="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded font-bold transition text-[10px]">Edit / No Telpon</button>
+                            <button onclick="deleteBooking(${index})" class="px-2.5 py-1 bg-slate-600 hover:bg-slate-700 text-white rounded font-bold transition text-[10px]">Hapus</button>
+                        </div>
                     </div>
                 `;
                 listEl.appendChild(itemDiv);
@@ -708,11 +735,28 @@
             checkAndGenerateNotifications();
         }
 
+        function changeStatus(index, newStatus) {
+            let item = bookedList[index];
+            if(newStatus === "Dikonfirmasi") {
+                let check = checkBookingConflictsForZones(item.zona, item.tglMulai, item.tglSelesai, index);
+                if(check.conflict) {
+                    alert('Gagal Mengonfirmasi!\nJadwal bentrok dengan pendaftar lain yang sudah dikonfirmasi:\n' + check.message);
+                    return;
+                }
+            }
+            bookedList[index].status = newStatus;
+            saveData();
+            renderCalendar();
+            renderAdminList();
+            alert(`Status pendaftaran berhasil diubah menjadi: ${newStatus}`);
+        }
+
         function addNewBooking() {
             let selectedZonas = Array.from(document.querySelectorAll('input[name="adminZonaCheckbox"]:checked')).map(el => el.value);
             let sekolah = document.getElementById('adminNamaSekolah').value.trim();
             let tglMulai = document.getElementById('adminTglMulai').value;
             let tglSelesai = document.getElementById('adminTglSelesai').value;
+            let telp = document.getElementById('adminNoTelepon').value.trim() || "-";
             let peserta = parseInt(document.getElementById('adminJumlahPeserta').value) || 50;
 
             if(selectedZonas.length === 0) { alert('Pilih minimal 1 zona perkemahan!'); return; }
@@ -722,7 +766,7 @@
             let check = checkBookingConflictsForZones(selectedZonas, tglMulai, tglSelesai);
             if(check.conflict) { alert('Gagal Menyimpan!\n' + check.message); return; }
 
-            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, alatSewa: [] });
+            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, telp, status: "Dikonfirmasi", alatSewa: [] });
             saveData();
             renderCalendar();
             renderAdminList();
@@ -731,12 +775,13 @@
             document.getElementById('adminNamaSekolah').value = '';
             document.getElementById('adminTglMulai').value = '';
             document.getElementById('adminTglSelesai').value = '';
+            document.getElementById('adminNoTelepon').value = '';
             document.getElementById('adminJumlahPeserta').value = '';
-            alert('Jadwal zona berhasil ditambahkan!');
+            alert('Jadwal zona berhasil ditambahkan dan langsung dikonfirmasi!');
         }
 
         function deleteBooking(index) {
-            if(confirm(`Yakin ingin menghapus jadwal ini?`)) {
+            if(confirm(`Yakin ingin menghapus jadwal ini dari sistem?`)) {
                 bookedList.splice(index, 1);
                 saveData();
                 renderCalendar();
@@ -749,6 +794,7 @@
             document.getElementById('editIndex').value = index;
             document.getElementById('editZona').value = item.zona.join(', ');
             document.getElementById('editSekolah').value = item.sekolah;
+            document.getElementById('editNoTelepon').value = item.telp !== "-" ? item.telp : "";
             document.getElementById('editTglMulai').value = item.tglMulai;
             document.getElementById('editTglSelesai').value = item.tglSelesai;
             document.getElementById('rescheduleModal').classList.remove('hidden');
@@ -761,23 +807,27 @@
             let item = bookedList[index];
             let newMulai = document.getElementById('editTglMulai').value;
             let newSelesai = document.getElementById('editTglSelesai').value;
+            let newTelp = document.getElementById('editNoTelepon').value.trim();
 
             if(!newMulai || !newSelesai || newMulai > newSelesai) { alert('Rentang tanggal tidak valid!'); return; }
 
-            let check = checkBookingConflictsForZones(item.zona, newMulai, newSelesai, index);
-            if(check.conflict) { alert('Gagal Mengubah Jadwal!\n' + check.message); return; }
+            if(item.status === "Dikonfirmasi") {
+                let check = checkBookingConflictsForZones(item.zona, newMulai, newSelesai, index);
+                if(check.conflict) { alert('Gagal Mengubah Jadwal!\n' + check.message); return; }
+            }
 
             bookedList[index].tglMulai = newMulai;
             bookedList[index].tglSelesai = newSelesai;
+            if(newTelp) bookedList[index].telp = newTelp;
 
             saveData();
             renderCalendar();
             renderAdminList();
             closeRescheduleModal();
-            alert('Jadwal berhasil diperbarui!');
+            alert('Detail & jadwal berhasil diperbarui!');
         }
 
-        // ================= RENDER DIAGRAM STATISTIK (DENGAN DISTRIBUSI PROPORSIONAL MULTI-ZONA) =================
+        // ================= RENDER DIAGRAM STATISTIK (HANYA YANG DIKONFIRMASI) =================
         function renderCharts() {
             const zones = ["Zona A", "Zona B", "Zona C", "Zona Wisata"];
             const year = parseInt(document.getElementById('globalStatYear').value);
@@ -790,6 +840,7 @@
                 let dataPerDay = new Array(daysInMonth).fill(0);
                 
                 bookedList.forEach(item => {
+                    if (item.status !== "Dikonfirmasi") return;
                     if (!item.zona.includes(zona)) return;
                     
                     let jumlahZonaPilihan = item.zona.length;
@@ -835,6 +886,7 @@
                 let dataPerWeek = [0, 0, 0, 0, 0];
                 
                 bookedList.forEach(item => {
+                    if (item.status !== "Dikonfirmasi") return;
                     if (!item.zona.includes(zona)) return;
 
                     let jumlahZonaPilihan = item.zona.length;
@@ -876,6 +928,7 @@
                 let dataPerMonth = new Array(12).fill(0);
                 
                 bookedList.forEach(item => {
+                    if (item.status !== "Dikonfirmasi") return;
                     if (!item.zona.includes(zona)) return;
 
                     let jumlahZonaPilihan = item.zona.length;
@@ -917,6 +970,7 @@
                     let totalPesertaYr = 0;
                     
                     bookedList.forEach(item => {
+                        if (item.status !== "Dikonfirmasi") return;
                         if (!item.zona.includes(zona)) return;
 
                         let jumlahZonaPilihan = item.zona.length;
@@ -954,6 +1008,7 @@
             let totalPesertaZona = zones.map(zona => {
                 let sum = 0;
                 bookedList.forEach(item => {
+                    if (item.status !== "Dikonfirmasi") return;
                     if (!item.zona.includes(zona)) return;
 
                     let jumlahZonaPilihan = item.zona.length;
@@ -1047,7 +1102,6 @@
                 else if(selectedSiswa.value.includes("200 s.d. 300")) peserta = 250;
             }
 
-            // Kumpulkan data sewa alat / fasilitas tambahan
             let selectedAlat = [];
             document.querySelectorAll('input[name="alatCheckbox"]:checked').forEach(cb => {
                 let alatName = cb.value;
@@ -1055,12 +1109,10 @@
                 selectedAlat.push({ nama: alatName, qty: qtyVal });
             });
 
-            let check = checkBookingConflictsForZones(selectedZonas, tglMulai, tglSelesai);
-            if(check.conflict) { alert(`Maaf, jadwal pada zona yang dipilih tidak tersedia.\nAlasan: ` + check.message); return; }
-
-            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, alatSewa: selectedAlat });
+            // Pendaftaran user otomatis berstatus "Pending" dan menunggu konfirmasi admin
+            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, telp, status: "Pending", alatSewa: selectedAlat });
             saveData();
-            renderCalendar();
+            renderAdminList();
 
             let alatDetailsHtml = selectedAlat.length > 0 
                 ? selectedAlat.map(a => `${a.nama} (${a.qty})`).join(', ') 
@@ -1080,7 +1132,6 @@
         function closeSuccessModal() {
             document.getElementById('successModal').classList.add('hidden');
             document.getElementById('campingForm').reset();
-            // Reset input jumlah alat ke disabled kembali
             document.querySelectorAll('input[name="alatCheckbox"]').forEach(cb => {
                 toggleAlatInput(cb);
             });
