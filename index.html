@@ -108,7 +108,7 @@
                             <input type="text" id="namaSekolah" required class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Masukkan Nama Sekolah">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor Telepon / WhatsApp (Nomor Pendaftar)</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor Telepon / WhatsApp</label>
                             <input type="tel" id="noTelepon" required class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Masukkan Nomor HP / WA Aktif">
                         </div>
                     </div>
@@ -147,9 +147,8 @@
                     <!-- 3. Menu Alat Sewa -->
                     <div class="card-box p-4 rounded-xl text-slate-800 space-y-3">
                         <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-100/80 px-2.5 py-1 rounded w-fit">
-                            <span>3</span> MENU ALAT SEWA
+                            <span>3</span> MENU ALAT SEWA <span class="text-[10px] font-normal text-slate-500">(Opsional)</span>
                         </div>
-                        
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                             <div class="flex items-center justify-between bg-emerald-50/60 p-2 rounded border border-emerald-200">
                                 <label class="flex items-center gap-1.5 font-medium"><input type="checkbox" id="checkPrisma" class="text-emerald-600"> Tenda Prisma</label>
@@ -178,23 +177,22 @@
                         </div>
                     </div>
 
-                    <!-- 4. Pembayaran DP Booking -->
+                    <!-- 4. Pembayaran DP Booking (TIDAK WAJIB / OPSIONAL) -->
                     <div class="card-box p-4 rounded-xl text-slate-800 space-y-3">
                         <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-100/80 px-2.5 py-1 rounded w-fit">
-                            <span>4</span> PEMBAYARAN DP BOOKING <span class="text-[10px] font-normal text-slate-500">(Opsional)</span>
+                            <span>4</span> PEMBAYARAN DP BOOKING <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-200 px-1.5 py-0.5 rounded">OPSIONAL (Bisa Dikosongkan)</span>
                         </div>
-                        <p class="text-[11px] text-slate-500">Kolom DP bersifat opsional, dapat dikosongkan jika ingin membayar nanti.</p>
-                        
+                        <p class="text-[11px] text-slate-500">Anda dapat langsung mengirim formulir pendaftaran tanpa harus mengisi pembayaran DP terlebih dahulu.</p>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal DP yang Dibayarkan (Rp)</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nominal DP yang Dibayarkan (Opsional)</label>
                             <input type="text" id="nominalDp" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Contoh: Rp 500.000 (Opsional)">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Metode Pembayaran</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Metode Pembayaran (Opsional)</label>
                             <select id="metodeBayar" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                                <option value="Belum Ditentukan">Belum Ditentukan</option>
+                                <option value="Belum Ditentukan">Belum Ditentukan / Bayar Nanti</option>
                                 <option value="Transfer Bank">Transfer Bank</option>
-                                <option value="Bayar Tunai">Bayar Tunai / Cash</option>
+                                <option value="Bayar Tunai">Bayar Tunai / Cash di Lokasi</option>
                             </select>
                         </div>
                     </div>
@@ -208,35 +206,52 @@
 
         </div>
 
-        <!-- ================= VIEW 2: PANEL ADMIN (PENGATURAN JADWAL & PEMBATALAN) ================= -->
+        <!-- ================= VIEW 2: PANEL ADMIN (MANAJEMEN SEKOLAH & UBAH JADWAL) ================= -->
         <div id="sectionAdmin" class="hidden wood-board p-6 rounded-2xl text-white space-y-6">
-            <div class="border-b border-amber-800 pb-3">
-                <h2 class="text-xl font-bold flex items-center gap-2">
-                    <span>⚙️</span> Panel Pengelola / Admin Buper
-                </h2>
-                <p class="text-xs text-amber-200/80 mt-1">Kelola tanggal yang terboking secara manual (tambah jadwal baru atau batalkan/hapus tanggal).</p>
+            <div class="border-b border-amber-800 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <span>⚙️</span> Panel Pengelola / Admin Buper
+                    </h2>
+                    <p class="text-xs text-amber-200/80 mt-1">Pantau jadwal sekolah yang masuk, ubah jadwal (reschedule), atau batalkan.</p>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Tambah Tanggal Terboking -->
-                <div class="card-box p-5 rounded-xl text-slate-800 space-y-4">
-                    <h3 class="text-sm font-bold text-emerald-900 border-b pb-2">➕ Tambah Tanggal Terboking Baru</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Tambah / Input Booking Baru (Kiri / 5 Kolom) -->
+                <div class="lg:col-span-5 card-box p-5 rounded-xl text-slate-800 space-y-4">
+                    <h3 class="text-sm font-bold text-emerald-900 border-b pb-2">➕ Input Jadwal Sekolah Baru</h3>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Tanggal</label>
-                        <input type="date" id="inputNewDate" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah / Instansi</label>
+                        <input type="text" id="adminNamaSekolah" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: SMAN 1 Bandung">
                     </div>
-                    <button onclick="addBookedDate()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 rounded-lg text-xs transition shadow">
-                        Simpan ke Kalender Terboking
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Mulai</label>
+                            <input type="date" id="adminTglMulai" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Selesai</label>
+                            <input type="date" id="adminTglSelesai" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                    </div>
+                    <button onclick="addNewBooking()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 rounded-lg text-xs transition shadow">
+                        Simpan ke Kalender & Daftar Sekolah
                     </button>
                 </div>
 
-                <!-- Daftar Tanggal Terboking & Batalkan -->
-                <div class="card-box p-5 rounded-xl text-slate-800 space-y-4">
-                    <h3 class="text-sm font-bold text-emerald-900 border-b pb-2">❌ Daftar Tanggal Terboking & Pembatalan</h3>
-                    <p class="text-[11px] text-slate-500">Klik tombol hapus untuk membatalkan jadwal yang sudah terisi.</p>
-                    
-                    <div id="adminBookedList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
-                        <!-- Di-generate otomatis via JS -->
+                <!-- Daftar Sekolah & Jadwal Terboking (Kanan / 7 Kolom) -->
+                <div class="lg:col-span-7 card-box p-5 rounded-xl text-slate-800 space-y-4 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-emerald-900 border-b pb-2 flex items-center justify-between">
+                            <span>🏫 Daftar Sekolah & Jadwal Aktif</span>
+                            <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded text-slate-600 font-normal">Total: <span id="totalBookingsCount">0</span> Jadwal</span>
+                        </h3>
+                        <p class="text-[11px] text-slate-500 mt-1">Anda dapat melakukan <b>Ubah Jadwal (Reschedule)</b> atau <b>Batalkan</b> pada daftar di bawah.</p>
+                        
+                        <div id="adminBookingList" class="space-y-3 mt-3 max-h-72 overflow-y-auto pr-1">
+                            <!-- Di-generate otomatis lewat JS -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -244,19 +259,81 @@
 
     </div>
 
-    <!-- Skrip Logika Kalender, Admin & WhatsApp -->
+    <!-- MODAL POPUP UBAH JADWAL (RESCHEDULE) -->
+    <div id="rescheduleModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="card-box w-full max-w-md p-5 rounded-2xl shadow-2xl space-y-4 text-slate-800">
+            <h3 class="text-base font-bold text-emerald-900 border-b pb-2 flex items-center gap-2">
+                <span>🔄</span> Ubah Jadwal (Reschedule)
+            </h3>
+            <input type="hidden" id="editIndex">
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah</label>
+                <input type="text" id="editSekolah" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-slate-100" readonly>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Mulai Baru</label>
+                    <input type="date" id="editTglMulai" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Selesai Baru</label>
+                    <input type="date" id="editTglSelesai" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeRescheduleModal()" class="w-1/2 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-2 rounded-lg text-xs transition">Batal</button>
+                <button onclick="saveReschedule()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-xs transition">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP KONFIRMASI SUKSES MENDAFTAR -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="card-box w-full max-w-md p-6 rounded-2xl shadow-2xl space-y-4 text-slate-800 text-center">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">✓</div>
+            <h3 class="text-lg font-bold text-emerald-900">Pendaftaran Berhasil Dikirim!</h3>
+            <p class="text-xs text-slate-600">Data pemesanan area perkemahan Anda telah tercatat di sistem kami.</p>
+            <div id="successDetails" class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-left text-xs space-y-1">
+                <!-- Diisi via JavaScript -->
+            </div>
+            <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow">
+                Tutup & Selesai
+            </button>
+        </div>
+    </div>
+
+    <!-- Skrip Logika Kalender, Admin, Reschedule, & Konfirmasi Sukses -->
     <script>
-        // Data Tanggal Terboking (Disimpan di localStorage agar permanen di browser)
-        let bookedDates = JSON.parse(localStorage.getItem('buperBookedDates')) || [
-            '2026-07-06',
-            '2026-07-07',
-            '2026-07-15',
-            '2026-07-16',
-            '2026-07-17'
+        // Data Jadwal Terboking & Sekolah (Disimpan di localStorage)
+        let bookedList = JSON.parse(localStorage.getItem('buperBookedList')) || [
+            { sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07" },
+            { sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-15", tglSelesai: "2026-07-17" }
         ];
 
-        function saveBookedDates() {
-            localStorage.setItem('buperBookedDates', JSON.stringify(bookedDates));
+        function saveData() {
+            localStorage.setItem('buperBookedList', JSON.stringify(bookedList));
+        }
+
+        // Ambil daftar tanggal tunggal merah dari rentang mulai s.d. selesai untuk kalender
+        function getActiveDatesArray() {
+            let dates = [];
+            bookedList.forEach(item => {
+                let currDate = new Date(item.tglMulai);
+                let endDate = new Date(item.tglSelesai);
+                
+                while(currDate <= endDate) {
+                    let year = currDate.getFullYear();
+                    let month = String(currDate.getMonth() + 1).padStart(2, '0');
+                    let day = String(currDate.getDate()).padStart(2, '0');
+                    let dateStr = `${year}-${month}-${day}`;
+                    
+                    if(!dates.includes(dateStr)) {
+                        dates.push(dateStr);
+                    }
+                    currDate.setDate(currDate.getDate() + 1);
+                }
+            });
+            return dates;
         }
 
         // Render Kalender Sisi User
@@ -269,6 +346,7 @@
             
             const firstDayIndex = new Date(year, month, 1).getDay();
             const totalDays = new Date(year, month + 1, 0).getDate();
+            const bookedDates = getActiveDatesArray();
 
             for (let i = 0; i < firstDayIndex; i++) {
                 const emptyDiv = document.createElement('div');
@@ -296,53 +374,107 @@
 
         // Render Daftar Manajemen Admin
         function renderAdminList() {
-            const listEl = document.getElementById('adminBookedList');
+            const listEl = document.getElementById('adminBookingList');
+            document.getElementById('totalBookingsCount').innerText = bookedList.length;
             listEl.innerHTML = '';
 
-            if(bookedDates.length === 0) {
-                listEl.innerHTML = '<p class="text-xs text-slate-400 italic">Belum ada tanggal terboking.</p>';
+            if(bookedList.length === 0) {
+                listEl.innerHTML = '<p class="text-xs text-slate-400 italic text-center py-4">Belum ada jadwal sekolah yang terdaftar.</p>';
                 return;
             }
 
-            // Urutkan tanggal
-            bookedDates.sort().forEach((dateStr) => {
+            bookedList.forEach((item, index) => {
                 let itemDiv = document.createElement('div');
-                itemDiv.className = "flex items-center justify-between bg-slate-100 p-2 rounded border text-xs";
+                itemDiv.className = "bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs";
                 itemDiv.innerHTML = `
-                    <span class="font-semibold text-slate-700">📅 ${dateStr}</span>
-                    <button onclick="removeBookedDate('${dateStr}')" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded font-bold transition">Batalkan / Hapus</button>
+                    <div>
+                        <p class="font-bold text-slate-800 text-sm">🏫 ${item.sekolah}</p>
+                        <p class="text-slate-500 mt-0.5">📅 <b>${item.tglMulai}</b> s.d. <b>${item.tglSelesai}</b></p>
+                    </div>
+                    <div class="flex items-center gap-1.5 self-end sm:self-center">
+                        <button onclick="openRescheduleModal(${index})" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1.5 rounded font-bold transition">Ubah Jadwal</button>
+                        <button onclick="deleteBooking(${index})" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 rounded font-bold transition">Batalkan</button>
+                    </div>
                 `;
                 listEl.appendChild(itemDiv);
             });
         }
 
-        // Fungsi Tambah Tanggal oleh Admin
-        function addBookedDate() {
-            let newDate = document.getElementById('inputNewDate').value;
-            if(!newDate) {
-                alert('Silakan pilih tanggal terlebih dahulu!');
+        // Fungsi Tambah Jadwal Baru oleh Admin
+        function addNewBooking() {
+            let sekolah = document.getElementById('adminNamaSekolah').value.trim();
+            let tglMulai = document.getElementById('adminTglMulai').value;
+            let tglSelesai = document.getElementById('adminTglSelesai').value;
+
+            if(!sekolah || !tglMulai || !tglSelesai) {
+                alert('Mohon isi nama sekolah dan rentang tanggal dengan lengkap!');
                 return;
             }
-            if(bookedDates.includes(newDate)) {
-                alert('Tanggal tersebut sudah ada di daftar terboking!');
+            if(tglMulai > tglSelesai) {
+                alert('Tanggal mulai tidak boleh melebihi tanggal selesai!');
                 return;
             }
-            bookedDates.push(newDate);
-            saveBookedDates();
+
+            bookedList.push({ sekolah, tglMulai, tglSelesai });
+            saveData();
             renderCalendar();
             renderAdminList();
-            document.getElementById('inputNewDate').value = '';
-            alert('Berhasil menambahkan tanggal terboking!');
+
+            document.getElementById('adminNamaSekolah').value = '';
+            document.getElementById('adminTglMulai').value = '';
+            document.getElementById('adminTglSelesai').value = '';
+            alert('Jadwal sekolah berhasil ditambahkan dan kalender diperbarui!');
         }
 
-        // Fungsi Hapus/Batalkan Tanggal oleh Admin
-        function removeBookedDate(dateStr) {
-            if(confirm(`Yakin ingin membatalkan/menghapus tanggal ${dateStr} dari daftar terboking?`)) {
-                bookedDates = bookedDates.filter(d => d !== dateStr);
-                saveBookedDates();
+        // Fungsi Hapus / Batalkan Jadwal
+        function deleteBooking(index) {
+            let item = bookedList[index];
+            if(confirm(`Yakin ingin membatalkan jadwal perkemahan untuk "${item.sekolah}"?`)) {
+                bookedList.splice(index, 1);
+                saveData();
                 renderCalendar();
                 renderAdminList();
             }
+        }
+
+        // Buka Modal Reschedule (Ubah Jadwal)
+        function openRescheduleModal(index) {
+            let item = bookedList[index];
+            document.getElementById('editIndex').value = index;
+            document.getElementById('editSekolah').value = item.sekolah;
+            document.getElementById('editTglMulai').value = item.tglMulai;
+            document.getElementById('editTglSelesai').value = item.tglSelesai;
+            document.getElementById('rescheduleModal').classList.remove('hidden');
+        }
+
+        // Tutup Modal Reschedule
+        function closeRescheduleModal() {
+            document.getElementById('rescheduleModal').classList.add('hidden');
+        }
+
+        // Simpan Perubahan Jadwal (Reschedule)
+        function saveReschedule() {
+            let index = document.getElementById('editIndex').value;
+            let newMulai = document.getElementById('editTglMulai').value;
+            let newSelesai = document.getElementById('editTglSelesai').value;
+
+            if(!newMulai || !newSelesai) {
+                alert('Tanggal mulai dan selesai wajib diisi!');
+                return;
+            }
+            if(newMulai > newSelesai) {
+                alert('Tanggal mulai tidak boleh lebih besar dari tanggal selesai!');
+                return;
+            }
+
+            bookedList[index].tglMulai = newMulai;
+            bookedList[index].tglSelesai = newSelesai;
+
+            saveData();
+            renderCalendar();
+            renderAdminList();
+            closeRescheduleModal();
+            alert('Jadwal berhasil diperbarui (Reschedule sukses)!');
         }
 
         // Fungsi Pengalihan Tampilan (User / Admin)
@@ -357,6 +489,7 @@
                 secAdmin.classList.add('hidden');
                 btnUser.className = "px-4 py-2 text-xs font-bold rounded-lg transition bg-emerald-600 text-white shadow";
                 btnAdmin.className = "px-4 py-2 text-xs font-bold rounded-lg transition text-amber-200 hover:text-white";
+                renderCalendar();
             } else {
                 secUser.classList.add('hidden');
                 secAdmin.classList.remove('hidden');
@@ -369,7 +502,7 @@
         // Inisialisasi awal
         renderCalendar();
 
-        // Kirim Formulir ke WhatsApp Admin
+        // Proses Pendaftaran Formulir (Munculkan Modal Sukses di Layar)
         document.getElementById('campingForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -379,47 +512,39 @@
             let tglMulai = document.getElementById('tglMulai').value;
             let tglSelesai = document.getElementById('tglSelesai').value;
             
-            let jumlahSiswa = "";
+            let jumlahSiswa = "Belum diisi";
             let selectedSiswa = document.querySelector('input[name="jumlahSiswa"]:checked');
             if(selectedSiswa) {
                 if(selectedSiswa.value === "Lainnya") {
-                    jumlahSiswa = document.getElementById('jumlahCustom').value + " orang (Lebih dari 300)";
+                    let customVal = document.getElementById('jumlahCustom').value;
+                    jumlahSiswa = (customVal ? customVal : "Banyak") + " orang";
                 } else {
                     jumlahSiswa = selectedSiswa.value + " orang";
                 }
             }
 
-            let alatSewa = [];
-            if(document.getElementById('checkPrisma').checked) alatSewa.push("- Tenda Prisma: " + document.getElementById('jmlPrisma').value + " unit");
-            if(document.getElementById('checkDome').checked) alatSewa.push("- Tenda Dome: " + document.getElementById('jmlDome').value + " unit");
-            if(document.getElementById('checkTarub').checked) alatSewa.push("- Tarub/Terpal: " + document.getElementById('jmlTarub').value + " unit");
-            if(document.getElementById('checkKayu').checked) alatSewa.push("- Kayu Bakar: " + document.getElementById('jmlKayu').value + " m³");
-            if(document.getElementById('checkSound').checked) alatSewa.push("- Sound System: " + document.getElementById('ketSound').value);
-            if(document.getElementById('checkCatering').checked) alatSewa.push("- Catering: " + document.getElementById('jmlCatering').value + " porsi");
-
             let nominalDp = document.getElementById('nominalDp').value.trim();
-            if(nominalDp === "") nominalDp = "Belum diisi / Menyusul";
+            if(nominalDp === "") nominalDp = "Belum diisi / Bayar Nanti";
             
             let metodeBayar = document.getElementById('metodeBayar').value;
 
-            let pesan = `Halo Admin Buper Talaga Pancar, saya ingin mendaftar area perkemahan dengan detail berikut:%0A%0A` +
-                        `*1. DATA PEMESAN*%0A` +
-                        `- Nama Pembooking: ${nama}%0A` +
-                        `- Sekolah/Instansi: ${sekolah}%0A` +
-                        `- No. WhatsApp Pendaftar: *${telp}*%0A%0A` +
-                        `*2. JADWAL KEGIATAN*%0A` +
-                        `- Tanggal Mulai: ${tglMulai}%0A` +
-                        `- Tanggal Selesai: ${tglSelesai}%0A` +
-                        `- Jumlah Siswa: ${jumlahSiswa}%0A%0A` +
-                        `*3. MENU ALAT SEWA*%0A` + (alatSewa.length > 0 ? alatSewa.join('%0A') : 'Tidak ada alat yang disewa') + `%0A%0A` +
-                        `*4. PEMBAYARAN DP*%0A` +
-                        `- Nominal DP: ${nominalDp}%0A` +
-                        `- Metode: ${metodeBayar}`;
-
-            // Ganti dengan nomor WhatsApp tujuan admin (format internasional tanpa angka 0 di depan, contoh: 628123456789)
-            let nomorAdmin = "6281234567890"; 
-            window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, '_blank');
+            // Tampilkan Detail di Modal Sukses
+            let detailsHtml = `
+                <p><b>Pembooking:</b> ${nama}</p>
+                <p><b>Sekolah:</b> ${sekolah}</p>
+                <p><b>No. Telp/HP:</b> ${telp}</p>
+                <p><b>Tanggal:</b> ${tglMulai} s.d. ${tglSelesai}</p>
+                <p><b>Jumlah Siswa:</b> ${jumlahSiswa}</p>
+                <p><b>DP Booking:</b> ${nominalDp} (${metodeBayar})</p>
+            `;
+            document.getElementById('successDetails').innerHTML = detailsHtml;
+            document.getElementById('successModal').classList.remove('hidden');
         });
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.getElementById('campingForm').reset();
+        }
     </script>
 </body>
 </html>
