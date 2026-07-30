@@ -132,16 +132,24 @@
                 <form id="campingForm" class="space-y-4">
                     <div class="card-box p-4 rounded-xl text-slate-800 space-y-3">
                         <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-100/80 px-2.5 py-1 rounded w-fit">
-                            <span>1</span> DATA PEMESAN & PILIH ZONA
+                            <span>1</span> DATA PEMESAN & PILIH ZONA (Bisa pilih lebih dari satu)
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Zona Perkemahan</label>
-                            <select id="pilihZona" required class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none font-bold text-emerald-800">
-                                <option value="Zona A">Zona A</option>
-                                <option value="Zona B">Zona B</option>
-                                <option value="Zona C">Zona C</option>
-                                <option value="Zona Wisata">Zona Wisata</option>
-                            </select>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Pilih Zona Perkemahan (Centang minimal 1)</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold text-emerald-900">
+                                <label class="flex items-center gap-2 p-2 bg-emerald-50 border border-emerald-200 rounded-lg cursor-pointer hover:bg-emerald-100">
+                                    <input type="checkbox" name="pilihZonaCheckbox" value="Zona A" class="text-emerald-600 w-4 h-4 rounded"> Zona A
+                                </label>
+                                <label class="flex items-center gap-2 p-2 bg-emerald-50 border border-emerald-200 rounded-lg cursor-pointer hover:bg-emerald-100">
+                                    <input type="checkbox" name="pilihZonaCheckbox" value="Zona B" class="text-emerald-600 w-4 h-4 rounded"> Zona B
+                                </label>
+                                <label class="flex items-center gap-2 p-2 bg-emerald-50 border border-emerald-200 rounded-lg cursor-pointer hover:bg-emerald-100">
+                                    <input type="checkbox" name="pilihZonaCheckbox" value="Zona C" class="text-emerald-600 w-4 h-4 rounded"> Zona C
+                                </label>
+                                <label class="flex items-center gap-2 p-2 bg-emerald-50 border border-emerald-200 rounded-lg cursor-pointer hover:bg-emerald-100">
+                                    <input type="checkbox" name="pilihZonaCheckbox" value="Zona Wisata" class="text-emerald-600 w-4 h-4 rounded"> Zona Wisata
+                                </label>
+                            </div>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Pembooking</label>
@@ -181,7 +189,7 @@
                                 <div class="col-span-full flex items-center gap-2 mt-1">
                                     <input type="radio" name="jumlahSiswa" value="Lainnya" id="radioLainnya" class="text-emerald-600">
                                     <span>Atau Isi Angka Pasti Peserta:</span>
-                                    <input type="number" id="jumlahCustom" placeholder="Cth: 150" class="w-24 px-2 py-0.5 border border-slate-300 rounded text-xs"> Orang
+                                    <input type="number" id="jumlahCustom" placeholder="Cth: 240" class="w-24 px-2 py-0.5 border border-slate-300 rounded text-xs"> Orang
                                 </div>
                             </div>
                         </div>
@@ -217,13 +225,21 @@
                 <div class="lg:col-span-5 card-box p-5 rounded-xl text-slate-800 space-y-4">
                     <h3 class="text-sm font-bold text-emerald-900 border-b pb-2">➕ Input Jadwal Baru (Admin)</h3>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Zona</label>
-                        <select id="adminZona" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none font-bold text-emerald-800">
-                            <option value="Zona A">Zona A</option>
-                            <option value="Zona B">Zona B</option>
-                            <option value="Zona C">Zona C</option>
-                            <option value="Zona Wisata">Zona Wisata</option>
-                        </select>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">Pilih Zona (Bisa centang lebih dari satu)</label>
+                        <div class="grid grid-cols-2 gap-2 text-xs font-bold text-emerald-900">
+                            <label class="flex items-center gap-2 p-1.5 bg-emerald-50 border border-emerald-200 rounded cursor-pointer">
+                                <input type="checkbox" name="adminZonaCheckbox" value="Zona A" class="text-emerald-600"> Zona A
+                            </label>
+                            <label class="flex items-center gap-2 p-1.5 bg-emerald-50 border border-emerald-200 rounded cursor-pointer">
+                                <input type="checkbox" name="adminZonaCheckbox" value="Zona B" class="text-emerald-600"> Zona B
+                            </label>
+                            <label class="flex items-center gap-2 p-1.5 bg-emerald-50 border border-emerald-200 rounded cursor-pointer">
+                                <input type="checkbox" name="adminZonaCheckbox" value="Zona C" class="text-emerald-600"> Zona C
+                            </label>
+                            <label class="flex items-center gap-2 p-1.5 bg-emerald-50 border border-emerald-200 rounded cursor-pointer">
+                                <input type="checkbox" name="adminZonaCheckbox" value="Zona Wisata" class="text-emerald-600"> Zona Wisata
+                            </label>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah / Instansi</label>
@@ -241,7 +257,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Peserta</label>
-                        <input type="number" id="adminJumlahPeserta" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: 100">
+                        <input type="number" id="adminJumlahPeserta" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: 240">
                     </div>
                     <button onclick="addNewBooking()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 rounded-lg text-xs transition shadow">
                         Simpan Jadwal Zona
@@ -252,7 +268,7 @@
                     <div>
                         <h3 class="text-sm font-bold text-emerald-900 border-b pb-2 flex items-center justify-between">
                             <span>🏫 Daftar Jadwal Semua Zona</span>
-                            <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded text-slate-600 font-normal">Total: <span id="totalBookingsCount">0</span></span>
+                            <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded text-slate-600 font-normal">Total Baris: <span id="totalBookingsCount">0</span></span>
                         </h3>
                         <div id="adminBookingList" class="space-y-3 mt-3 max-h-80 overflow-y-auto pr-1"></div>
                     </div>
@@ -267,7 +283,7 @@
                     <h2 class="text-xl font-bold flex items-center gap-2">
                         <span>📊</span> Perbandingan Peserta Antar Zona
                     </h2>
-                    <p class="text-xs text-amber-200/80 mt-1">Analisis mendalam jumlah peserta berkemah tiap Hari, Minggu, Bulan, dan Tahun.</p>
+                    <p class="text-xs text-amber-200/80 mt-1">Analisis mendalam jumlah peserta berkemah tiap Hari, Minggu, Bulan, dan Tahun (distribusi adil multi-zona).</p>
                 </div>
                 <!-- Tahun Global untuk Statistik -->
                 <div class="flex items-center gap-2">
@@ -290,7 +306,7 @@
                                 <option value="0">Januari</option><option value="1">Februari</option><option value="2">Maret</option><option value="3">April</option><option value="4">Mei</option><option value="5">Juni</option><option value="6" selected>Juli</option><option value="7">Agustus</option><option value="8">September</option><option value="9">Oktober</option><option value="10">November</option><option value="11">Desember</option>
                             </select>
                         </div>
-                        <p class="text-[11px] text-slate-500 mb-3">Akumulasi peserta harian di tiap zona.</p>
+                        <p class="text-[11px] text-slate-500 mb-3">Distribusi peserta harian di tiap zona.</p>
                     </div>
                     <div class="w-full h-[240px] relative flex items-center justify-center">
                         <canvas id="chartDay"></canvas>
@@ -298,7 +314,7 @@
                 </div>
 
                 <!-- 2. Perbandingan Peserta Tiap Minggu (Mingguan dalam Bulan Terpilih) -->
-                    <div class="card-box p-5 rounded-2xl text-slate-800 flex flex-col justify-between">
+                <div class="card-box p-5 rounded-2xl text-slate-800 flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <h3 class="text-sm font-bold text-emerald-900">Perbandingan Peserta Tiap Minggu</h3>
@@ -338,7 +354,7 @@
             <!-- RINGKASAN DIAGRAM DONAT PROPORSI ZONA -->
             <div class="card-box p-6 rounded-2xl text-slate-800 mt-6">
                 <h3 class="text-sm font-bold text-emerald-900 mb-1 text-center">Proporsi Keseluruhan Peserta Antar Zona (Tahun Terpilih)</h3>
-                <p class="text-[11px] text-slate-500 mb-4 text-center">Persentase kontribusi jumlah peserta tiap zona.</p>
+                <p class="text-[11px] text-slate-500 mb-4 text-center">Persentase kontribusi jumlah peserta tiap zona secara proporsional.</p>
                 <div class="w-full max-w-[320px] h-[320px] mx-auto relative flex items-center justify-center">
                     <canvas id="chartDoughnutZona"></canvas>
                 </div>
@@ -384,7 +400,7 @@
         <div class="card-box w-full max-w-md p-6 rounded-2xl shadow-2xl space-y-4 text-slate-800 text-center">
             <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">✓</div>
             <h3 class="text-lg font-bold text-emerald-900">Pendaftaran Zona Berhasil!</h3>
-            <p class="text-xs text-slate-600">Jadwal perkemahan Anda telah tercatat pada zona yang dipilih.</p>
+            <p class="text-xs text-slate-600">Jadwal perkemahan Anda telah tercatat pada zona-zona yang dipilih.</p>
             <div id="successDetails" class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-left text-xs space-y-1"></div>
             <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow">
                 Tutup & Selesai
@@ -395,17 +411,22 @@
     <!-- SCRIPT LOGIKA APLIKASI -->
     <script>
         let bookedList = JSON.parse(localStorage.getItem('buperBookedListMulti')) || [
-            { zona: "Zona A", sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120 },
-            { zona: "Zona B", sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 90 },
-            { zona: "Zona C", sekolah: "MTs Negeri 1 Cirebon", tglMulai: "2026-07-14", tglSelesai: "2026-07-16", peserta: 150 },
-            { zona: "Zona Wisata", sekolah: "MAN 2 Majalengka", tglMulai: "2026-07-18", tglSelesai: "2026-07-21", peserta: 200 }
+            { zona: ["Zona A"], sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120 },
+            { zona: ["Zona B"], sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 90 },
+            { zona: ["Zona C", "Zona Wisata"], sekolah: "MTs Negeri 1 Cirebon", tglMulai: "2026-07-14", tglSelesai: "2026-07-16", peserta: 240 }
         ];
+
+        bookedList = bookedList.map(item => {
+            if (typeof item.zona === 'string') {
+                item.zona = [item.zona];
+            }
+            return item;
+        });
 
         function saveData() {
             localStorage.setItem('buperBookedListMulti', JSON.stringify(bookedList));
         }
 
-        // Variabel Instansiasi Chart.js
         let chartDayInstance = null;
         let chartWeekInstance = null;
         let chartMonthInstance = null;
@@ -413,10 +434,10 @@
         let chartDoughnutInstance = null;
 
         const zoneColors = {
-            "Zona A": "#10b981",       // Hijau Emerald
-            "Zona B": "#3b82f6",       // Biru
-            "Zona C": "#f59e0b",       // Kuning Amber
-            "Zona Wisata": "#ec4899"   // Pink / Magenta
+            "Zona A": "#10b981",       
+            "Zona B": "#3b82f6",       
+            "Zona C": "#f59e0b",       
+            "Zona Wisata": "#ec4899"   
         };
 
         function initDropdowns() {
@@ -443,24 +464,26 @@
             checkAndGenerateNotifications();
         }
 
-        function checkBookingConflict(zona, tglMulai, tglSelesai, excludeIndex = -1) {
+        function checkBookingConflictsForZones(selectedZones, tglMulai, tglSelesai, excludeIndex = -1) {
             let startNew = new Date(tglMulai);
             let endNew = new Date(tglSelesai);
 
-            for (let i = 0; i < bookedList.length; i++) {
-                if (i === excludeIndex) continue;
-                let item = bookedList[i];
-                if (item.zona !== zona) continue;
+            for (let z of selectedZones) {
+                for (let i = 0; i < bookedList.length; i++) {
+                    if (i === excludeIndex) continue;
+                    let item = bookedList[i];
+                    if (!item.zona.includes(z)) continue;
 
-                let startExisting = new Date(item.tglMulai);
-                let endExisting = new Date(item.tglSelesai);
+                    let startExisting = new Date(item.tglMulai);
+                    let endExisting = new Date(item.tglSelesai);
 
-                if (startNew > startExisting && startNew < endExisting) {
-                    return { conflict: true, message: `Bentrok di [${zona}] dengan "${item.sekolah}" (${item.tglMulai} s.d. ${item.tglSelesai}).` };
-                }
-                if (startNew <= startExisting && endNew >= endExisting && !(startNew.getTime() === endExisting.getTime())) {
-                    if (endNew > startExisting) {
-                        return { conflict: true, message: `Bentrok rentang penuh di [${zona}] dengan "${item.sekolah}".` };
+                    if (startNew > startExisting && startNew < endExisting) {
+                        return { conflict: true, message: `Bentrok di [${z}] dengan "${item.sekolah}" (${item.tglMulai} s.d. ${item.tglSelesai}).` };
+                    }
+                    if (startNew <= startExisting && endNew >= endExisting && !(startNew.getTime() === endExisting.getTime())) {
+                        if (endNew > startExisting) {
+                            return { conflict: true, message: `Bentrok rentang penuh di [${z}] dengan "${item.sekolah}".` };
+                        }
                     }
                 }
             }
@@ -469,17 +492,22 @@
 
         function getOverlapNotifications() {
             let notifications = [];
-            for (let i = 0; i < bookedList.length; i++) {
-                for (let j = 0; j < bookedList.length; j++) {
-                    if (i === j) continue;
-                    let itemA = bookedList[i];
-                    let itemB = bookedList[j];
-                    
-                    if (itemA.zona === itemB.zona && itemA.tglMulai === itemB.tglSelesai) {
-                        notifications.push(`Di <b>${itemA.zona}</b>: <b>${itemA.sekolah}</b> mulai tgl <b>${itemA.tglMulai}</b>, bertepatan dengan kepulangan <b>${itemB.sekolah}</b>.`);
+            const zones = ["Zona A", "Zona B", "Zona C", "Zona Wisata"];
+            
+            zones.forEach(z => {
+                let zoneBookings = bookedList.filter(item => item.zona.includes(z));
+                for (let i = 0; i < zoneBookings.length; i++) {
+                    for (let j = 0; j < zoneBookings.length; j++) {
+                        if (i === j) continue;
+                        let itemA = zoneBookings[i];
+                        let itemB = zoneBookings[j];
+                        
+                        if (itemA.tglMulai === itemB.tglSelesai) {
+                            notifications.push(`Di <b>${z}</b>: <b>${itemA.sekolah}</b> mulai tgl <b>${itemA.tglMulai}</b>, bertepatan dengan kepulangan <b>${itemB.sekolah}</b>.`);
+                        }
                     }
                 }
-            }
+            });
             return [...new Set(notifications)];
         }
 
@@ -502,7 +530,7 @@
 
         function getActiveDatesArrayForZona(targetZona) {
             let dates = [];
-            bookedList.filter(item => item.zona === targetZona).forEach(item => {
+            bookedList.filter(item => item.zona.includes(targetZona)).forEach(item => {
                 let currDate = new Date(item.tglMulai);
                 let endDate = new Date(item.tglSelesai);
                 
@@ -568,12 +596,13 @@
             }
 
             bookedList.forEach((item, index) => {
+                let zonaBadges = item.zona.map(z => `<span class="bg-emerald-800 text-white px-2 py-0.5 rounded text-[10px] font-bold mr-1">${z}</span>`).join('');
                 let itemDiv = document.createElement('div');
                 itemDiv.className = "bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs";
                 itemDiv.innerHTML = `
                     <div>
-                        <span class="bg-emerald-800 text-white px-2 py-0.5 rounded text-[10px] font-bold">${item.zona}</span>
-                        <p class="font-bold text-slate-800 text-sm mt-1">🏫 ${item.sekolah} (${item.peserta || 0} Peserta)</p>
+                        <div class="mb-1">${zonaBadges}</div>
+                        <p class="font-bold text-slate-800 text-sm">🏫 ${item.sekolah} (${item.peserta || 0} Peserta)</p>
                         <p class="text-slate-500 mt-0.5">📅 <b>${item.tglMulai}</b> s.d. <b>${item.tglSelesai}</b></p>
                     </div>
                     <div class="flex items-center gap-1.5 self-end sm:self-center">
@@ -587,23 +616,25 @@
         }
 
         function addNewBooking() {
-            let zona = document.getElementById('adminZona').value;
+            let selectedZonas = Array.from(document.querySelectorAll('input[name="adminZonaCheckbox"]:checked')).map(el => el.value);
             let sekolah = document.getElementById('adminNamaSekolah').value.trim();
             let tglMulai = document.getElementById('adminTglMulai').value;
             let tglSelesai = document.getElementById('adminTglSelesai').value;
             let peserta = parseInt(document.getElementById('adminJumlahPeserta').value) || 50;
 
+            if(selectedZonas.length === 0) { alert('Pilih minimal 1 zona perkemahan!'); return; }
             if(!sekolah || !tglMulai || !tglSelesai) { alert('Semua field wajib diisi!'); return; }
             if(tglMulai > tglSelesai) { alert('Tanggal mulai tidak boleh melebihi tanggal selesai!'); return; }
 
-            let check = checkBookingConflict(zona, tglMulai, tglSelesai);
+            let check = checkBookingConflictsForZones(selectedZonas, tglMulai, tglSelesai);
             if(check.conflict) { alert('Gagal Menyimpan!\n' + check.message); return; }
 
-            bookedList.push({ zona, sekolah, tglMulai, tglSelesai, peserta });
+            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta });
             saveData();
             renderCalendar();
             renderAdminList();
 
+            document.querySelectorAll('input[name="adminZonaCheckbox"]').forEach(el => el.checked = false);
             document.getElementById('adminNamaSekolah').value = '';
             document.getElementById('adminTglMulai').value = '';
             document.getElementById('adminTglSelesai').value = '';
@@ -623,7 +654,7 @@
         function openRescheduleModal(index) {
             let item = bookedList[index];
             document.getElementById('editIndex').value = index;
-            document.getElementById('editZona').value = item.zona;
+            document.getElementById('editZona').value = item.zona.join(', ');
             document.getElementById('editSekolah').value = item.sekolah;
             document.getElementById('editTglMulai').value = item.tglMulai;
             document.getElementById('editTglSelesai').value = item.tglSelesai;
@@ -640,7 +671,7 @@
 
             if(!newMulai || !newSelesai || newMulai > newSelesai) { alert('Rentang tanggal tidak valid!'); return; }
 
-            let check = checkBookingConflict(item.zona, newMulai, newSelesai, index);
+            let check = checkBookingConflictsForZones(item.zona, newMulai, newSelesai, index);
             if(check.conflict) { alert('Gagal Mengubah Jadwal!\n' + check.message); return; }
 
             bookedList[index].tglMulai = newMulai;
@@ -653,35 +684,43 @@
             alert('Jadwal berhasil diperbarui!');
         }
 
-        // ================= RENDER DIAGRAM STATISTIK PERBANDINGAN =================
+        // ================= RENDER DIAGRAM STATISTIK (DENGAN DISTRIBUSI PROPORSIONAL MULTI-ZONA) =================
         function renderCharts() {
             const zones = ["Zona A", "Zona B", "Zona C", "Zona Wisata"];
             const year = parseInt(document.getElementById('globalStatYear').value);
             const month = parseInt(document.getElementById('filterDayMonth').value);
 
-            // 1. DATA HARIAN (Berdasarkan Bulan & Hari Terpilih di Zona)
+            // 1. DATA HARIAN
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             let dayLabels = Array.from({length: daysInMonth}, (_, i) => i + 1);
             let dayDatasets = zones.map(zona => {
                 let dataPerDay = new Array(daysInMonth).fill(0);
-                bookedList.filter(item => item.zona === zona).forEach(item => {
+                
+                bookedList.forEach(item => {
+                    if (!item.zona.includes(zona)) return;
+                    
+                    // Membagi peserta secara proporsional berdasarkan jumlah zona yang dipilih
+                    let jumlahZonaPilihan = item.zona.length;
+                    let effectivePeserta = (item.peserta || 50) / jumlahZonaPilihan;
+
                     let start = new Date(item.tglMulai);
                     let end = new Date(item.tglSelesai);
                     let totalDays = Math.max(1, Math.round((end - start)/(1000*3600*24)) + 1);
-                    let pesertaPerDay = (item.peserta || 50) / totalDays;
+                    let pesertaPerDay = effectivePeserta / totalDays;
 
                     let curr = new Date(start);
                     while(curr <= end) {
                         if(curr.getFullYear() === year && curr.getMonth() === month) {
                             let dIdx = curr.getDate() - 1;
-                            dataPerDay[dIdx] += Math.round(pesertaPerDay);
+                            dataPerDay[dIdx] += pesertaPerDay;
                         }
                         curr.setDate(curr.getDate() + 1);
                     }
                 });
+
                 return {
                     label: zona,
-                    data: dataPerDay,
+                    data: dataPerDay.map(val => Math.round(val)),
                     backgroundColor: zoneColors[zona],
                     borderWidth: 1
                 };
@@ -693,32 +732,39 @@
                 data: { labels: dayLabels, datasets: dayDatasets },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } },
+                    scales: { x: { stacked: false }, y: { stacked: false, beginAtZero: true } },
                     plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
                 }
             });
 
-            // 2. DATA MINGGUAN (Minggu ke-1 sampai ke-5 dalam Bulan Terpilih)
+            // 2. DATA MINGGUAN
             let weekLabels = ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4", "Minggu 5"];
             let weekDatasets = zones.map(zona => {
                 let dataPerWeek = [0, 0, 0, 0, 0];
-                bookedList.filter(item => item.zona === zona).forEach(item => {
+                
+                bookedList.forEach(item => {
+                    if (!item.zona.includes(zona)) return;
+
+                    let jumlahZonaPilihan = item.zona.length;
+                    let effectivePeserta = (item.peserta || 50) / jumlahZonaPilihan;
+
                     let start = new Date(item.tglMulai);
                     let end = new Date(item.tglSelesai);
                     let totalDays = Math.max(1, Math.round((end - start)/(1000*3600*24)) + 1);
-                    let pesertaPerDay = (item.peserta || 50) / totalDays;
+                    let pesertaPerDay = effectivePeserta / totalDays;
 
                     let curr = new Date(start);
                     while(curr <= end) {
                         if(curr.getFullYear() === year && curr.getMonth() === month) {
                             let dayNum = curr.getDate();
                             let wIdx = Math.min(4, Math.floor((dayNum - 1) / 7));
-                            dataPerWeek[wIdx] += Math.round(pesertaPerDay);
+                            dataPerWeek[wIdx] += pesertaPerDay;
                         }
                         curr.setDate(curr.getDate() + 1);
                     }
                 });
-                return { label: zona, data: dataPerWeek, backgroundColor: zoneColors[zona] };
+
+                return { label: zona, data: dataPerWeek.map(val => Math.round(val)), backgroundColor: zoneColors[zona] };
             });
 
             if(chartWeekInstance) chartWeekInstance.destroy();
@@ -727,31 +773,38 @@
                 data: { labels: weekLabels, datasets: weekDatasets },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } },
+                    scales: { x: { stacked: false }, y: { stacked: false, beginAtZero: true } },
                     plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
                 }
             });
 
-            // 3. DATA BULANAN (12 Bulan dalam Tahun Terpilih)
+            // 3. DATA BULANAN
             let monthLabels = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"];
             let monthDatasets = zones.map(zona => {
                 let dataPerMonth = new Array(12).fill(0);
-                bookedList.filter(item => item.zona === zona).forEach(item => {
+                
+                bookedList.forEach(item => {
+                    if (!item.zona.includes(zona)) return;
+
+                    let jumlahZonaPilihan = item.zona.length;
+                    let effectivePeserta = (item.peserta || 50) / jumlahZonaPilihan;
+
                     let start = new Date(item.tglMulai);
                     let end = new Date(item.tglSelesai);
                     let totalDays = Math.max(1, Math.round((end - start)/(1000*3600*24)) + 1);
-                    let pesertaPerDay = (item.peserta || 50) / totalDays;
+                    let pesertaPerDay = effectivePeserta / totalDays;
 
                     let curr = new Date(start);
                     while(curr <= end) {
                         if(curr.getFullYear() === year) {
                             let mIdx = curr.getMonth();
-                            dataPerMonth[mIdx] += Math.round(pesertaPerDay);
+                            dataPerMonth[mIdx] += pesertaPerDay;
                         }
                         curr.setDate(curr.getDate() + 1);
                     }
                 });
-                return { label: zona, data: dataPerMonth, backgroundColor: zoneColors[zona] };
+
+                return { label: zona, data: dataPerMonth.map(val => Math.round(val)), backgroundColor: zoneColors[zona] };
             });
 
             if(chartMonthInstance) chartMonthInstance.destroy();
@@ -760,29 +813,36 @@
                 data: { labels: monthLabels, datasets: monthDatasets },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } },
+                    scales: { x: { stacked: false }, y: { stacked: false, beginAtZero: true } },
                     plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
                 }
             });
 
-            // 4. DATA TAHUNAN (Lintas Tahun)
+            // 4. DATA TAHUNAN
             let yearsList = [year - 1, year, year + 1];
             let yearDatasets = zones.map(zona => {
                 let dataPerYear = yearsList.map(yr => {
                     let totalPesertaYr = 0;
-                    bookedList.filter(item => item.zona === zona).forEach(item => {
+                    
+                    bookedList.forEach(item => {
+                        if (!item.zona.includes(zona)) return;
+
+                        let jumlahZonaPilihan = item.zona.length;
+                        let effectivePeserta = (item.peserta || 50) / jumlahZonaPilihan;
+
                         let start = new Date(item.tglMulai);
                         let end = new Date(item.tglSelesai);
                         let totalDays = Math.max(1, Math.round((end - start)/(1000*3600*24)) + 1);
-                        let pesertaPerDay = (item.peserta || 50) / totalDays;
+                        let pesertaPerDay = effectivePeserta / totalDays;
 
                         let curr = new Date(start);
                         while(curr <= end) {
-                            if(curr.getFullYear() === yr) totalPesertaYr += Math.round(pesertaPerDay);
+                            if(curr.getFullYear() === yr) totalPesertaYr += pesertaPerDay;
                             curr.setDate(curr.getDate() + 1);
                         }
                     });
-                    return totalPesertaYr;
+
+                    return Math.round(totalPesertaYr);
                 });
                 return { label: zona, data: dataPerYear, backgroundColor: zoneColors[zona] };
             });
@@ -793,27 +853,32 @@
                 data: { labels: yearsList.map(String), datasets: yearDatasets },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } },
+                    scales: { x: { stacked: false }, y: { stacked: false, beginAtZero: true } },
                     plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
                 }
             });
 
-            // 5. DIAGRAM DONAT TOTAL PESERTA TAHUNAN PER ZONA
+            // 5. DIAGRAM DONAT PROPORSI KESELURUHAN
             let totalPesertaZona = zones.map(zona => {
                 let sum = 0;
-                bookedList.filter(item => item.zona === zona).forEach(item => {
+                bookedList.forEach(item => {
+                    if (!item.zona.includes(zona)) return;
+
+                    let jumlahZonaPilihan = item.zona.length;
+                    let effectivePeserta = (item.peserta || 50) / jumlahZonaPilihan;
+
                     let start = new Date(item.tglMulai);
                     let end = new Date(item.tglSelesai);
                     let totalDays = Math.max(1, Math.round((end - start)/(1000*3600*24)) + 1);
-                    let pesertaPerDay = (item.peserta || 50) / totalDays;
+                    let pesertaPerDay = effectivePeserta / totalDays;
 
                     let curr = new Date(start);
                     while(curr <= end) {
-                        if(curr.getFullYear() === year) sum += Math.round(pesertaPerDay);
+                        if(curr.getFullYear() === year) sum += pesertaPerDay;
                         curr.setDate(curr.getDate() + 1);
                     }
                 });
-                return sum;
+                return Math.round(sum);
             });
 
             if(chartDoughnutInstance) chartDoughnutInstance.destroy();
@@ -868,13 +933,14 @@
 
         document.getElementById('campingForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            let zona = document.getElementById('pilihZona').value;
+            let selectedZonas = Array.from(document.querySelectorAll('input[name="pilihZonaCheckbox"]:checked')).map(el => el.value);
             let nama = document.getElementById('namaPembooking').value;
             let sekolah = document.getElementById('namaSekolah').value;
             let telp = document.getElementById('noTelepon').value;
             let tglMulai = document.getElementById('tglMulai').value;
             let tglSelesai = document.getElementById('tglSelesai').value;
 
+            if(selectedZonas.length === 0) { alert('Harap pilih minimal 1 zona perkemahan!'); return; }
             if(tglMulai > tglSelesai) { alert('Tanggal mulai tidak boleh melebihi tanggal selesai!'); return; }
 
             let peserta = 50;
@@ -889,19 +955,19 @@
                 else if(selectedSiswa.value.includes("200 s.d. 300")) peserta = 250;
             }
 
-            let check = checkBookingConflict(zona, tglMulai, tglSelesai);
-            if(check.conflict) { alert(`Maaf, jadwal di ${zona} tidak tersedia.\nAlasan: ` + check.message); return; }
+            let check = checkBookingConflictsForZones(selectedZonas, tglMulai, tglSelesai);
+            if(check.conflict) { alert(`Maaf, jadwal pada zona yang dipilih tidak tersedia.\nAlasan: ` + check.message); return; }
 
-            bookedList.push({ zona, sekolah, tglMulai, tglSelesai, peserta });
+            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta });
             saveData();
             renderCalendar();
 
             document.getElementById('successDetails').innerHTML = `
-                <p><b>Zona:</b> ${zona}</p>
+                <p><b>Zona Dipilih:</b> ${selectedZonas.join(', ')}</p>
                 <p><b>Pembooking:</b> ${nama}</p>
                 <p><b>Sekolah:</b> ${sekolah}</p>
                 <p><b>Tanggal:</b> ${tglMulai} s.d. ${tglSelesai}</p>
-                <p><b>Estimasi Peserta:</b> ${peserta} orang</p>
+                <p><b>Estimasi Peserta:</b> ${peserta} orang (Dibagi secara proporsional ke ${selectedZonas.length} zona terpilih di statistik)</p>
             `;
             document.getElementById('successModal').classList.remove('hidden');
         });
