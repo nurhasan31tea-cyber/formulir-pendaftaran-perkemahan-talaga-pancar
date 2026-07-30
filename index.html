@@ -195,6 +195,74 @@
                         </div>
                     </div>
 
+                    <!-- TAMBAHAN: FORM SEWA ALAT CAMPING, CATERING, TARUB & SOUND SYSTEM -->
+                    <div class="card-box p-4 rounded-xl text-slate-800 space-y-3">
+                        <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-100/80 px-2.5 py-1 rounded w-fit">
+                            <span>3</span> PERMINTAAN SEWA ALAT CAMPING, CATERING, TARUB & SOUND SYSTEM (Opsional)
+                        </div>
+                        <p class="text-xs text-slate-500">Centang dan masukkan jumlah/porsi alat serta fasilitas tambahan yang ingin disewa:</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                            <!-- Alat Camping -->
+                            <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Tenda Dome" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> Tenda Dome
+                                </label>
+                                <input type="number" id="qty_Tenda Dome" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+
+                            <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Sleeping Bag" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> Sleeping Bag
+                                </label>
+                                <input type="number" id="qty_Sleeping Bag" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+
+                            <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Matras" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> Matras Tidur
+                                </label>
+                                <input type="number" id="qty_Matras" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+
+                            <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Kompor & Nesting" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> Kompor & Nesting
+                                </label>
+                                <input type="number" id="qty_Kompor & Nesting" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+
+                            <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Lampu Tenda" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> Lampu Tenda Gantung
+                                </label>
+                                <input type="number" id="qty_Lampu Tenda" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+
+                            <!-- Fasilitas Tambahan: Catering, Tarub, Sound System -->
+                            <div class="flex items-center justify-between p-2 bg-amber-50/60 border border-amber-200/80 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-amber-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Catering" class="text-amber-700 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> 🍽️ Catering (Porsi)
+                                </label>
+                                <input type="number" id="qty_Catering" min="1" value="50" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+
+                            <div class="flex items-center justify-between p-2 bg-amber-50/60 border border-amber-200/80 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-amber-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Tarub / Tenda Besar" class="text-amber-700 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> 🎪 Tarub / Tenda Besar (Unit)
+                                </label>
+                                <input type="number" id="qty_Tarub / Tenda Besar" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+
+                            <div class="col-span-full flex items-center justify-between p-2 bg-amber-50/60 border border-amber-200/80 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-amber-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Sound System" class="text-amber-700 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> 🔊 Sound System (Paket)
+                                </label>
+                                <input type="number" id="qty_Sound System" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-xl transition duration-200 shadow-xl border border-emerald-400 text-sm flex items-center justify-center gap-2">
                         <span>🚀</span> KIRIM PENDAFTARAN SEKARANG
                     </button>
@@ -400,7 +468,7 @@
         <div class="card-box w-full max-w-md p-6 rounded-2xl shadow-2xl space-y-4 text-slate-800 text-center">
             <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">✓</div>
             <h3 class="text-lg font-bold text-emerald-900">Pendaftaran Zona Berhasil!</h3>
-            <p class="text-xs text-slate-600">Jadwal perkemahan Anda telah tercatat pada zona-zona yang dipilih.</p>
+            <p class="text-xs text-slate-600">Jadwal perkemahan dan permintaan sewa fasilitas Anda telah tercatat.</p>
             <div id="successDetails" class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-left text-xs space-y-1"></div>
             <button onclick="closeSuccessModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow">
                 Tutup & Selesai
@@ -411,20 +479,38 @@
     <!-- SCRIPT LOGIKA APLIKASI -->
     <script>
         let bookedList = JSON.parse(localStorage.getItem('buperBookedListMulti')) || [
-            { zona: ["Zona A"], sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120 },
-            { zona: ["Zona B"], sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 90 },
-            { zona: ["Zona C", "Zona Wisata"], sekolah: "MTs Negeri 1 Cirebon", tglMulai: "2026-07-14", tglSelesai: "2026-07-16", peserta: 240 }
+            { zona: ["Zona A"], sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120, alatSewa: [{nama: "Tenda Dome", qty: 10}] },
+            { zona: ["Zona B"], sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 90, alatSewa: [] },
+            { zona: ["Zona C", "Zona Wisata"], sekolah: "MTs Negeri 1 Cirebon", tglMulai: "2026-07-14", tglSelesai: "2026-07-16", peserta: 240, alatSewa: [{nama: "Catering", qty: 240}, {nama: "Sound System", qty: 1}] }
         ];
 
         bookedList = bookedList.map(item => {
             if (typeof item.zona === 'string') {
                 item.zona = [item.zona];
             }
+            if (!item.alatSewa) {
+                item.alatSewa = [];
+            }
             return item;
         });
 
         function saveData() {
             localStorage.setItem('buperBookedListMulti', JSON.stringify(bookedList));
+        }
+
+        // Fungsi mengaktifkan/menonaktifkan input jumlah alat/fasilitas sewa
+        function toggleAlatInput(checkbox) {
+            let inputId = 'qty_' + checkbox.value;
+            let inputEl = document.getElementById(inputId);
+            if(checkbox.checked) {
+                inputEl.disabled = false;
+                inputEl.classList.remove('bg-slate-100');
+                inputEl.classList.add('bg-white');
+            } else {
+                inputEl.disabled = true;
+                inputEl.classList.add('bg-slate-100');
+                inputEl.classList.remove('bg-white');
+            }
         }
 
         let chartDayInstance = null;
@@ -597,6 +683,12 @@
 
             bookedList.forEach((item, index) => {
                 let zonaBadges = item.zona.map(z => `<span class="bg-emerald-800 text-white px-2 py-0.5 rounded text-[10px] font-bold mr-1">${z}</span>`).join('');
+                
+                let alatText = '<span class="text-slate-400 italic">Tidak ada sewa tambahan</span>';
+                if(item.alatSewa && item.alatSewa.length > 0) {
+                    alatText = item.alatSewa.map(a => `<span class="bg-amber-100 text-amber-900 border border-amber-300 px-1.5 py-0.5 rounded text-[10px] font-semibold mr-1">${a.nama} (${a.qty})</span>`).join('');
+                }
+
                 let itemDiv = document.createElement('div');
                 itemDiv.className = "bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs";
                 itemDiv.innerHTML = `
@@ -604,6 +696,7 @@
                         <div class="mb-1">${zonaBadges}</div>
                         <p class="font-bold text-slate-800 text-sm">🏫 ${item.sekolah} (${item.peserta || 0} Peserta)</p>
                         <p class="text-slate-500 mt-0.5">📅 <b>${item.tglMulai}</b> s.d. <b>${item.tglSelesai}</b></p>
+                        <p class="text-slate-600 mt-1">📦 <b>Sewa Fasilitas:</b> ${alatText}</p>
                     </div>
                     <div class="flex items-center gap-1.5 self-end sm:self-center">
                         <button onclick="openRescheduleModal(${index})" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1.5 rounded font-bold transition">Ubah</button>
@@ -629,7 +722,7 @@
             let check = checkBookingConflictsForZones(selectedZonas, tglMulai, tglSelesai);
             if(check.conflict) { alert('Gagal Menyimpan!\n' + check.message); return; }
 
-            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta });
+            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, alatSewa: [] });
             saveData();
             renderCalendar();
             renderAdminList();
@@ -699,7 +792,6 @@
                 bookedList.forEach(item => {
                     if (!item.zona.includes(zona)) return;
                     
-                    // Membagi peserta secara proporsional berdasarkan jumlah zona yang dipilih
                     let jumlahZonaPilihan = item.zona.length;
                     let effectivePeserta = (item.peserta || 50) / jumlahZonaPilihan;
 
@@ -955,19 +1047,32 @@
                 else if(selectedSiswa.value.includes("200 s.d. 300")) peserta = 250;
             }
 
+            // Kumpulkan data sewa alat / fasilitas tambahan
+            let selectedAlat = [];
+            document.querySelectorAll('input[name="alatCheckbox"]:checked').forEach(cb => {
+                let alatName = cb.value;
+                let qtyVal = parseInt(document.getElementById('qty_' + alatName).value) || 1;
+                selectedAlat.push({ nama: alatName, qty: qtyVal });
+            });
+
             let check = checkBookingConflictsForZones(selectedZonas, tglMulai, tglSelesai);
             if(check.conflict) { alert(`Maaf, jadwal pada zona yang dipilih tidak tersedia.\nAlasan: ` + check.message); return; }
 
-            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta });
+            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, alatSewa: selectedAlat });
             saveData();
             renderCalendar();
 
+            let alatDetailsHtml = selectedAlat.length > 0 
+                ? selectedAlat.map(a => `${a.nama} (${a.qty})`).join(', ') 
+                : 'Tidak ada';
+
             document.getElementById('successDetails').innerHTML = `
                 <p><b>Zona Dipilih:</b> ${selectedZonas.join(', ')}</p>
-                <p><b>Pembooking:</b> ${nama}</p>
+                <p><b>Pembooking:</b> ${nama} (${telp})</p>
                 <p><b>Sekolah:</b> ${sekolah}</p>
                 <p><b>Tanggal:</b> ${tglMulai} s.d. ${tglSelesai}</p>
-                <p><b>Estimasi Peserta:</b> ${peserta} orang (Dibagi secara proporsional ke ${selectedZonas.length} zona terpilih di statistik)</p>
+                <p><b>Estimasi Peserta:</b> ${peserta} orang</p>
+                <p><b>Sewa Fasilitas:</b> ${alatDetailsHtml}</p>
             `;
             document.getElementById('successModal').classList.remove('hidden');
         });
@@ -975,6 +1080,10 @@
         function closeSuccessModal() {
             document.getElementById('successModal').classList.add('hidden');
             document.getElementById('campingForm').reset();
+            // Reset input jumlah alat ke disabled kembali
+            document.querySelectorAll('input[name="alatCheckbox"]').forEach(cb => {
+                toggleAlatInput(cb);
+            });
         }
     </script>
 </body>
