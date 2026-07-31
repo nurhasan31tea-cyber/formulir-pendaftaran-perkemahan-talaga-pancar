@@ -167,7 +167,7 @@
 
                     <div class="card-box p-4 rounded-xl text-slate-800 space-y-3">
                         <div class="flex items-center gap-2 text-xs font-bold text-emerald-900 bg-emerald-100/80 px-2.5 py-1 rounded w-fit">
-                            <span>2</span> JADWAL KEGIATAN
+                            <span>2</span> JADWAL KEGIATAN & PEMBAYARAN DP
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
@@ -178,6 +178,10 @@
                                 <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Selesai</label>
                                 <input type="date" id="tglSelesai" required class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                             </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">DP Booking (Opsional)</label>
+                            <input type="text" id="dpBooking" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: Rp 150.000 atau Tunai (Kosongkan jika tidak ada)">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Perkiraan Jumlah Peserta / Siswa</label>
@@ -213,6 +217,13 @@
 
                             <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
                                 <label class="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900">
+                                    <input type="checkbox" name="alatCheckbox" value="Tenda Prisma" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> ⛺ Tenda Prisma
+                                </label>
+                                <input type="number" id="qty_Tenda Prisma" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
+                            </div>
+
+                            <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
+                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900">
                                     <input type="checkbox" name="alatCheckbox" value="Sleeping Bag" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> Sleeping Bag
                                 </label>
                                 <input type="number" id="qty_Sleeping Bag" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
@@ -223,13 +234,6 @@
                                     <input type="checkbox" name="alatCheckbox" value="Matras" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> Matras Tidur
                                 </label>
                                 <input type="number" id="qty_Matras" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
-                            </div>
-
-                            <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
-                                <label class="flex items-center gap-2 cursor-pointer font-semibold text-emerald-900">
-                                    <input type="checkbox" name="alatCheckbox" value="Kompor & Nesting" class="text-emerald-600 w-4 h-4 rounded" onchange="toggleAlatInput(this)"> Kompor & Nesting
-                                </label>
-                                <input type="number" id="qty_Kompor & Nesting" min="1" value="1" disabled class="w-16 px-2 py-1 border border-slate-300 rounded text-xs bg-slate-100 text-center font-bold">
                             </div>
 
                             <div class="flex items-center justify-between p-2 bg-emerald-50/50 border border-emerald-200/60 rounded-lg">
@@ -277,7 +281,7 @@
                     <h2 class="text-xl font-bold flex items-center gap-2">
                         <span>⚙️</span> Panel Pengelola / Admin Buper
                     </h2>
-                    <p class="text-xs text-amber-200/80 mt-1">Konfirmasi pendaftaran masuk, ubah no telpon, reschedule jadwal, dan pantau zona.</p>
+                    <p class="text-xs text-amber-200/80 mt-1">Konfirmasi pendaftaran masuk, ubah no telpon, reschedule jadwal, input sewa alat, dan kelola DP.</p>
                 </div>
             </div>
 
@@ -327,10 +331,43 @@
                         <label class="block text-xs font-semibold text-slate-600 mb-1">No Telepon / WhatsApp</label>
                         <input type="tel" id="adminNoTelepon" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: 081234567890">
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Peserta</label>
-                        <input type="number" id="adminJumlahPeserta" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: 240">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Peserta</label>
+                            <input type="number" id="adminJumlahPeserta" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: 240">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">DP Booking (Opsional)</label>
+                            <input type="text" id="adminDpBooking" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: Rp 200rb">
+                        </div>
                     </div>
+
+                    <!-- Input Sewa Alat Langsung oleh Admin -->
+                    <div class="space-y-1.5 pt-1 border-t">
+                        <label class="block text-xs font-semibold text-slate-700">Pilih Sewa Alat / Fasilitas (Opsional)</label>
+                        <div class="grid grid-cols-2 gap-2 text-[11px]">
+                            <label class="flex items-center gap-1.5 bg-slate-50 p-1.5 border rounded cursor-pointer">
+                                <input type="checkbox" name="adminAlatCheckbox" value="Tenda Dome" class="text-emerald-600" onchange="toggleAdminAlatInput(this)"> Tenda Dome
+                            </label>
+                            <input type="number" id="admin_qty_Tenda Dome" min="1" value="1" disabled class="w-full px-1.5 py-1 border rounded text-[11px] bg-slate-100 text-center font-bold">
+
+                            <label class="flex items-center gap-1.5 bg-slate-50 p-1.5 border rounded cursor-pointer">
+                                <input type="checkbox" name="adminAlatCheckbox" value="Tenda Prisma" class="text-emerald-600" onchange="toggleAdminAlatInput(this)"> Tenda Prisma
+                            </label>
+                            <input type="number" id="admin_qty_Tenda Prisma" min="1" value="1" disabled class="w-full px-1.5 py-1 border rounded text-[11px] bg-slate-100 text-center font-bold">
+
+                            <label class="flex items-center gap-1.5 bg-slate-50 p-1.5 border rounded cursor-pointer">
+                                <input type="checkbox" name="adminAlatCheckbox" value="Catering" class="text-emerald-600" onchange="toggleAdminAlatInput(this)"> Catering
+                            </label>
+                            <input type="number" id="admin_qty_Catering" min="1" value="50" disabled class="w-full px-1.5 py-1 border rounded text-[11px] bg-slate-100 text-center font-bold">
+
+                            <label class="flex items-center gap-1.5 bg-slate-50 p-1.5 border rounded cursor-pointer">
+                                <input type="checkbox" name="adminAlatCheckbox" value="Sound System" class="text-emerald-600" onchange="toggleAdminAlatInput(this)"> Sound System
+                            </label>
+                            <input type="number" id="admin_qty_Sound System" min="1" value="1" disabled class="w-full px-1.5 py-1 border rounded text-[11px] bg-slate-100 text-center font-bold">
+                        </div>
+                    </div>
+
                     <button onclick="addNewBooking()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 rounded-lg text-xs transition shadow">
                         Simpan & Konfirmasi Otomatis
                     </button>
@@ -369,7 +406,7 @@
             <!-- GRID GRAFIK PERBANDINGAN -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                <!-- 1. Perbandingan Peserta Tiap Hari (Harian dalam Bulan Terpilih) -->
+                <!-- 1. Perbandingan Peserta Tiap Hari -->
                 <div class="card-box p-5 rounded-2xl text-slate-800 flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -385,7 +422,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Perbandingan Peserta Tiap Minggu (Mingguan dalam Bulan Terpilih) -->
+                <!-- 2. Perbandingan Peserta Tiap Minggu -->
                 <div class="card-box p-5 rounded-2xl text-slate-800 flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-2">
@@ -399,7 +436,7 @@
                     </div>
                 </div>
 
-                <!-- 3. Perbandingan Peserta Tiap Bulan (Bulanan dalam Tahun Terpilih) -->
+                <!-- 3. Perbandingan Peserta Tiap Bulan -->
                 <div class="card-box p-5 rounded-2xl text-slate-800 flex flex-col justify-between">
                     <div>
                         <h3 class="text-sm font-bold text-emerald-900 mb-1">Perbandingan Peserta Tiap Bulan</h3>
@@ -410,7 +447,7 @@
                     </div>
                 </div>
 
-                <!-- 4. Perbandingan Peserta Tiap Tahun (Multi-Tahun) -->
+                <!-- 4. Perbandingan Peserta Tiap Tahun -->
                 <div class="card-box p-5 rounded-2xl text-slate-800 flex flex-col justify-between">
                     <div>
                         <h3 class="text-sm font-bold text-emerald-900 mb-1">Perbandingan Peserta Tiap Tahun</h3>
@@ -454,6 +491,10 @@
                 <label class="block text-xs font-semibold text-slate-600 mb-1">No Telepon / WhatsApp Baru</label>
                 <input type="tel" id="editNoTelepon" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Masukkan No Telpon / WA">
             </div>
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">DP Booking</label>
+                <input type="text" id="editDpBooking" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: Rp 150.000">
+            </div>
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Mulai Baru</label>
@@ -486,10 +527,10 @@
 
     <!-- SCRIPT LOGIKA APLIKASI -->
     <script>
-        let bookedList = JSON.parse(localStorage.getItem('buperBookedListMultiStatus')) || [
-            { zona: ["Zona A"], sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120, telp: "081111222333", status: "Dikonfirmasi", alatSewa: [{nama: "Tenda Dome", qty: 10}] },
-            { zona: ["Zona B"], sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 90, telp: "082222333444", status: "Dikonfirmasi", alatSewa: [] },
-            { zona: ["Zona C", "Zona Wisata"], sekolah: "MTs Negeri 1 Cirebon", tglMulai: "2026-07-14", tglSelesai: "2026-07-16", peserta: 240, telp: "083333444555", status: "Pending", alatSewa: [{nama: "Catering", qty: 240}, {nama: "Sound System", qty: 1}] }
+        let bookedList = JSON.parse(localStorage.getItem('buperBookedListMultiStatusDP')) || [
+            { zona: ["Zona A"], sekolah: "SMAN 1 Cirebon", tglMulai: "2026-07-06", tglSelesai: "2026-07-07", peserta: 120, telp: "081111222333", dp: "Rp 250.000", status: "Dikonfirmasi", alatSewa: [{nama: "Tenda Dome", qty: 10}] },
+            { zona: ["Zona B"], sekolah: "SMPN 3 Kuningan", tglMulai: "2026-07-10", tglSelesai: "2026-07-12", peserta: 90, telp: "082222333444", dp: "", status: "Dikonfirmasi", alatSewa: [] },
+            { zona: ["Zona C", "Zona Wisata"], sekolah: "MTs Negeri 1 Cirebon", tglMulai: "2026-07-14", tglSelesai: "2026-07-16", peserta: 240, telp: "083333444555", dp: "Rp 500.000", status: "Pending", alatSewa: [{nama: "Catering", qty: 240}, {nama: "Sound System", qty: 1}] }
         ];
 
         bookedList = bookedList.map(item => {
@@ -497,15 +538,30 @@
             if (!item.alatSewa) item.alatSewa = [];
             if (!item.status) item.status = "Dikonfirmasi";
             if (!item.telp) item.telp = "-";
+            if (!item.dp) item.dp = "";
             return item;
         });
 
         function saveData() {
-            localStorage.setItem('buperBookedListMultiStatus', JSON.stringify(bookedList));
+            localStorage.setItem('buperBookedListMultiStatusDP', JSON.stringify(bookedList));
         }
 
         function toggleAlatInput(checkbox) {
             let inputId = 'qty_' + checkbox.value;
+            let inputEl = document.getElementById(inputId);
+            if(checkbox.checked) {
+                inputEl.disabled = false;
+                inputEl.classList.remove('bg-slate-100');
+                inputEl.classList.add('bg-white');
+            } else {
+                inputEl.disabled = true;
+                inputEl.classList.add('bg-slate-100');
+                inputEl.classList.remove('bg-white');
+            }
+        }
+
+        function toggleAdminAlatInput(checkbox) {
+            let inputId = 'admin_qty_' + checkbox.value;
             let inputEl = document.getElementById(inputId);
             if(checkbox.checked) {
                 inputEl.disabled = false;
@@ -563,7 +619,6 @@
                 for (let i = 0; i < bookedList.length; i++) {
                     if (i === excludeIndex) continue;
                     let item = bookedList[i];
-                    // Hanya cek bentrok dengan yang statusnya sudah "Dikonfirmasi"
                     if (item.status !== "Dikonfirmasi") continue;
                     if (!item.zona.includes(z)) continue;
 
@@ -623,7 +678,6 @@
 
         function getActiveDatesArrayForZona(targetZona) {
             let dates = [];
-            // Kalender hanya menampilkan tanggal dari jadwal yang statusnya "Dikonfirmasi"
             bookedList.filter(item => item.zona.includes(targetZona) && item.status === "Dikonfirmasi").forEach(item => {
                 let currDate = new Date(item.tglMulai);
                 let endDate = new Date(item.tglSelesai);
@@ -706,6 +760,8 @@
                     alatText = item.alatSewa.map(a => `<span class="bg-amber-50 text-amber-900 border border-amber-200 px-1.5 py-0.5 rounded text-[10px] font-semibold mr-1">${a.nama} (${a.qty})</span>`).join('');
                 }
 
+                let dpText = item.dp ? `<span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-bold">💰 DP: ${item.dp}</span>` : `<span class="text-slate-400 italic text-[10px]">DP: Belum ada</span>`;
+
                 let itemDiv = document.createElement('div');
                 itemDiv.className = "bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-col gap-2 text-xs";
                 itemDiv.innerHTML = `
@@ -713,7 +769,7 @@
                         <div>
                             <div class="mb-1">${zonaBadges} ${statusBadge}</div>
                             <p class="font-bold text-slate-800 text-sm">🏫 ${item.sekolah} (${item.peserta || 0} Peserta)</p>
-                            <p class="text-slate-600 mt-0.5">📞 No Telpon / WA: <b>${item.telp}</b></p>
+                            <p class="text-slate-600 mt-0.5">📞 No Telpon / WA: <b>${item.telp}</b> | ${dpText}</p>
                             <p class="text-slate-500 mt-0.5">📅 <b>${item.tglMulai}</b> s.d. <b>${item.tglSelesai}</b></p>
                             <p class="text-slate-600 mt-1">📦 <b>Sewa Fasilitas:</b> ${alatText}</p>
                         </div>
@@ -758,6 +814,7 @@
             let tglSelesai = document.getElementById('adminTglSelesai').value;
             let telp = document.getElementById('adminNoTelepon').value.trim() || "-";
             let peserta = parseInt(document.getElementById('adminJumlahPeserta').value) || 50;
+            let dp = document.getElementById('adminDpBooking').value.trim();
 
             if(selectedZonas.length === 0) { alert('Pilih minimal 1 zona perkemahan!'); return; }
             if(!sekolah || !tglMulai || !tglSelesai) { alert('Semua field wajib diisi!'); return; }
@@ -766,17 +823,29 @@
             let check = checkBookingConflictsForZones(selectedZonas, tglMulai, tglSelesai);
             if(check.conflict) { alert('Gagal Menyimpan!\n' + check.message); return; }
 
-            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, telp, status: "Dikonfirmasi", alatSewa: [] });
+            let selectedAlat = [];
+            document.querySelectorAll('input[name="adminAlatCheckbox"]:checked').forEach(cb => {
+                let alatName = cb.value;
+                let qtyVal = parseInt(document.getElementById('admin_qty_' + alatName).value) || 1;
+                selectedAlat.push({ nama: alatName, qty: qtyVal });
+            });
+
+            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, telp, dp, status: "Dikonfirmasi", alatSewa: selectedAlat });
             saveData();
             renderCalendar();
             renderAdminList();
 
             document.querySelectorAll('input[name="adminZonaCheckbox"]').forEach(el => el.checked = false);
+            document.querySelectorAll('input[name="adminAlatCheckbox"]').forEach(cb => {
+                cb.checked = false;
+                toggleAdminAlatInput(cb);
+            });
             document.getElementById('adminNamaSekolah').value = '';
             document.getElementById('adminTglMulai').value = '';
             document.getElementById('adminTglSelesai').value = '';
             document.getElementById('adminNoTelepon').value = '';
             document.getElementById('adminJumlahPeserta').value = '';
+            document.getElementById('adminDpBooking').value = '';
             alert('Jadwal zona berhasil ditambahkan dan langsung dikonfirmasi!');
         }
 
@@ -795,6 +864,7 @@
             document.getElementById('editZona').value = item.zona.join(', ');
             document.getElementById('editSekolah').value = item.sekolah;
             document.getElementById('editNoTelepon').value = item.telp !== "-" ? item.telp : "";
+            document.getElementById('editDpBooking').value = item.dp || "";
             document.getElementById('editTglMulai').value = item.tglMulai;
             document.getElementById('editTglSelesai').value = item.tglSelesai;
             document.getElementById('rescheduleModal').classList.remove('hidden');
@@ -808,6 +878,7 @@
             let newMulai = document.getElementById('editTglMulai').value;
             let newSelesai = document.getElementById('editTglSelesai').value;
             let newTelp = document.getElementById('editNoTelepon').value.trim();
+            let newDp = document.getElementById('editDpBooking').value.trim();
 
             if(!newMulai || !newSelesai || newMulai > newSelesai) { alert('Rentang tanggal tidak valid!'); return; }
 
@@ -819,6 +890,7 @@
             bookedList[index].tglMulai = newMulai;
             bookedList[index].tglSelesai = newSelesai;
             if(newTelp) bookedList[index].telp = newTelp;
+            bookedList[index].dp = newDp;
 
             saveData();
             renderCalendar();
@@ -827,7 +899,7 @@
             alert('Detail & jadwal berhasil diperbarui!');
         }
 
-        // ================= RENDER DIAGRAM STATISTIK (HANYA YANG DIKONFIRMASI) =================
+        // ================= RENDER DIAGRAM STATISTIK =================
         function renderCharts() {
             const zones = ["Zona A", "Zona B", "Zona C", "Zona Wisata"];
             const year = parseInt(document.getElementById('globalStatYear').value);
@@ -1086,6 +1158,7 @@
             let telp = document.getElementById('noTelepon').value;
             let tglMulai = document.getElementById('tglMulai').value;
             let tglSelesai = document.getElementById('tglSelesai').value;
+            let dp = document.getElementById('dpBooking').value.trim();
 
             if(selectedZonas.length === 0) { alert('Harap pilih minimal 1 zona perkemahan!'); return; }
             if(tglMulai > tglSelesai) { alert('Tanggal mulai tidak boleh melebihi tanggal selesai!'); return; }
@@ -1109,8 +1182,7 @@
                 selectedAlat.push({ nama: alatName, qty: qtyVal });
             });
 
-            // Pendaftaran user otomatis berstatus "Pending" dan menunggu konfirmasi admin
-            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, telp, status: "Pending", alatSewa: selectedAlat });
+            bookedList.push({ zona: selectedZonas, sekolah, tglMulai, tglSelesai, peserta, telp, dp, status: "Pending", alatSewa: selectedAlat });
             saveData();
             renderAdminList();
 
@@ -1118,12 +1190,15 @@
                 ? selectedAlat.map(a => `${a.nama} (${a.qty})`).join(', ') 
                 : 'Tidak ada';
 
+            let dpDetailsHtml = dp ? dp : 'Tidak ada (Belum diisi)';
+
             document.getElementById('successDetails').innerHTML = `
                 <p><b>Zona Dipilih:</b> ${selectedZonas.join(', ')}</p>
                 <p><b>Pembooking:</b> ${nama} (${telp})</p>
                 <p><b>Sekolah:</b> ${sekolah}</p>
                 <p><b>Tanggal:</b> ${tglMulai} s.d. ${tglSelesai}</p>
                 <p><b>Estimasi Peserta:</b> ${peserta} orang</p>
+                <p><b>DP Booking:</b> ${dpDetailsHtml}</p>
                 <p><b>Sewa Fasilitas:</b> ${alatDetailsHtml}</p>
             `;
             document.getElementById('successModal').classList.remove('hidden');
