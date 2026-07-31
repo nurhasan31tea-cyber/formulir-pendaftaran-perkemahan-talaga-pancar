@@ -472,29 +472,49 @@
 
     </div>
 
-    <!-- MODAL POPUP UBAH JADWAL & NO TELPON -->
+    <!-- MODAL POPUP UBAH JADWAL & EDIT LENGKAP ADMIN -->
     <div id="rescheduleModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3">
-        <div class="card-box w-full max-w-md p-5 rounded-2xl shadow-2xl space-y-4 text-slate-800">
+        <div class="card-box w-full max-w-lg p-5 rounded-2xl shadow-2xl space-y-4 text-slate-800 max-h-[90vh] overflow-y-auto">
             <h3 class="text-base font-bold text-emerald-900 border-b pb-2 flex items-center gap-2">
-                <span>🔄</span> Edit Detail & Jadwal Pendaftar
+                <span>🔄</span> Edit Detail, Zona, Peserta & Sewa Alat
             </h3>
             <input type="hidden" id="editIndex">
+            
+            <!-- Edit Zona (Checkbox) -->
             <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Zona</label>
-                <input type="text" id="editZona" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-slate-100 font-bold" readonly>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Zona Perkemahan</label>
+                <div class="grid grid-cols-2 gap-2 text-xs font-bold text-emerald-900">
+                    <label class="flex items-center gap-1.5 p-1.5 bg-emerald-50 border rounded cursor-pointer">
+                        <input type="checkbox" name="editZonaCheckbox" value="Zona A" class="text-emerald-600"> Zona A
+                    </label>
+                    <label class="flex items-center gap-1.5 p-1.5 bg-emerald-50 border rounded cursor-pointer">
+                        <input type="checkbox" name="editZonaCheckbox" value="Zona B" class="text-emerald-600"> Zona B
+                    </label>
+                    <label class="flex items-center gap-1.5 p-1.5 bg-emerald-50 border rounded cursor-pointer">
+                        <input type="checkbox" name="editZonaCheckbox" value="Zona C" class="text-emerald-600"> Zona C
+                    </label>
+                    <label class="flex items-center gap-1.5 p-1.5 bg-emerald-50 border rounded cursor-pointer">
+                        <input type="checkbox" name="editZonaCheckbox" value="Zona Wisata" class="text-emerald-600"> Zona Wisata
+                    </label>
+                </div>
             </div>
+
             <div>
                 <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah / Pembooking</label>
                 <input type="text" id="editSekolah" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-slate-100" readonly>
             </div>
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">No Telepon / WhatsApp Baru</label>
-                <input type="tel" id="editNoTelepon" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Masukkan No Telpon / WA">
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">No Telepon / WhatsApp Baru</label>
+                    <input type="tel" id="editNoTelepon" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="No Telpon / WA">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Peserta</label>
+                    <input type="number" id="editPeserta" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Jumlah Peserta">
+                </div>
             </div>
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">DP Booking</label>
-                <input type="text" id="editDpBooking" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: Rp 150.000">
-            </div>
+
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Mulai Baru</label>
@@ -505,6 +525,38 @@
                     <input type="date" id="editTglSelesai" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
             </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">DP Booking</label>
+                <input type="text" id="editDpBooking" class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cth: Rp 150.000">
+            </div>
+
+            <!-- Edit Sewa Alat -->
+            <div class="space-y-1.5 pt-1 border-t">
+                <label class="block text-xs font-semibold text-slate-700">Edit Sewa Alat / Fasilitas</label>
+                <div class="grid grid-cols-2 gap-2 text-[11px]">
+                    <label class="flex items-center gap-1.5 bg-slate-50 p-1.5 border rounded cursor-pointer">
+                        <input type="checkbox" name="editAlatCheckbox" value="Tenda Dome" class="text-emerald-600" onchange="toggleEditAlatInput(this)"> Tenda Dome
+                    </label>
+                    <input type="number" id="edit_qty_Tenda Dome" min="1" value="1" disabled class="w-full px-1.5 py-1 border rounded text-[11px] bg-slate-100 text-center font-bold">
+
+                    <label class="flex items-center gap-1.5 bg-slate-50 p-1.5 border rounded cursor-pointer">
+                        <input type="checkbox" name="editAlatCheckbox" value="Tenda Prisma" class="text-emerald-600" onchange="toggleEditAlatInput(this)"> Tenda Prisma
+                    </label>
+                    <input type="number" id="edit_qty_Tenda Prisma" min="1" value="1" disabled class="w-full px-1.5 py-1 border rounded text-[11px] bg-slate-100 text-center font-bold">
+
+                    <label class="flex items-center gap-1.5 bg-slate-50 p-1.5 border rounded cursor-pointer">
+                        <input type="checkbox" name="editAlatCheckbox" value="Catering" class="text-emerald-600" onchange="toggleEditAlatInput(this)"> Catering
+                    </label>
+                    <input type="number" id="edit_qty_Catering" min="1" value="50" disabled class="w-full px-1.5 py-1 border rounded text-[11px] bg-slate-100 text-center font-bold">
+
+                    <label class="flex items-center gap-1.5 bg-slate-50 p-1.5 border rounded cursor-pointer">
+                        <input type="checkbox" name="editAlatCheckbox" value="Sound System" class="text-emerald-600" onchange="toggleEditAlatInput(this)"> Sound System
+                    </label>
+                    <input type="number" id="edit_qty_Sound System" min="1" value="1" disabled class="w-full px-1.5 py-1 border rounded text-[11px] bg-slate-100 text-center font-bold">
+                </div>
+            </div>
+
             <div class="flex gap-2 pt-2">
                 <button onclick="closeRescheduleModal()" class="w-1/2 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-2 rounded-lg text-xs transition">Batal</button>
                 <button onclick="saveReschedule()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-xs transition">Simpan Perubahan</button>
@@ -562,6 +614,20 @@
 
         function toggleAdminAlatInput(checkbox) {
             let inputId = 'admin_qty_' + checkbox.value;
+            let inputEl = document.getElementById(inputId);
+            if(checkbox.checked) {
+                inputEl.disabled = false;
+                inputEl.classList.remove('bg-slate-100');
+                inputEl.classList.add('bg-white');
+            } else {
+                inputEl.disabled = true;
+                inputEl.classList.add('bg-slate-100');
+                inputEl.classList.remove('bg-white');
+            }
+        }
+
+        function toggleEditAlatInput(checkbox) {
+            let inputId = 'edit_qty_' + checkbox.value;
             let inputEl = document.getElementById(inputId);
             if(checkbox.checked) {
                 inputEl.disabled = false;
@@ -781,7 +847,7 @@
                             <button onclick="changeStatus(${index}, 'Dibatalkan')" class="px-2 py-1 bg-red-600 hover:bg-red-700 text-white rounded font-bold transition text-[10px]">Batalkan</button>
                         </div>
                         <div class="flex items-center gap-1">
-                            <button onclick="openRescheduleModal(${index})" class="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded font-bold transition text-[10px]">Edit / No Telpon</button>
+                            <button onclick="openRescheduleModal(${index})" class="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded font-bold transition text-[10px]">Edit Detail & Alat</button>
                             <button onclick="deleteBooking(${index})" class="px-2.5 py-1 bg-slate-600 hover:bg-slate-700 text-white rounded font-bold transition text-[10px]">Hapus</button>
                         </div>
                     </div>
@@ -861,12 +927,42 @@
         function openRescheduleModal(index) {
             let item = bookedList[index];
             document.getElementById('editIndex').value = index;
-            document.getElementById('editZona').value = item.zona.join(', ');
             document.getElementById('editSekolah').value = item.sekolah;
             document.getElementById('editNoTelepon').value = item.telp !== "-" ? item.telp : "";
+            document.getElementById('editPeserta').value = item.peserta || 50;
             document.getElementById('editDpBooking').value = item.dp || "";
             document.getElementById('editTglMulai').value = item.tglMulai;
             document.getElementById('editTglSelesai').value = item.tglSelesai;
+
+            // Set checklist zona
+            document.querySelectorAll('input[name="editZonaCheckbox"]').forEach(cb => {
+                cb.checked = item.zona.includes(cb.value);
+            });
+
+            // Reset dan set checklist alat sewa
+            document.querySelectorAll('input[name="editAlatCheckbox"]').forEach(cb => {
+                cb.checked = false;
+                let inputEl = document.getElementById('edit_qty_' + cb.value);
+                inputEl.disabled = true;
+                inputEl.value = 1;
+                inputEl.classList.add('bg-slate-100');
+                inputEl.classList.remove('bg-white');
+            });
+
+            if(item.alatSewa) {
+                item.alatSewa.forEach(a => {
+                    let cb = document.querySelector(`input[name="editAlatCheckbox"][value="${a.nama}"]`);
+                    if(cb) {
+                        cb.checked = true;
+                        let inputEl = document.getElementById('edit_qty_' + a.nama);
+                        inputEl.disabled = false;
+                        inputEl.value = a.qty;
+                        inputEl.classList.remove('bg-slate-100');
+                        inputEl.classList.add('bg-white');
+                    }
+                });
+            }
+
             document.getElementById('rescheduleModal').classList.remove('hidden');
         }
 
@@ -875,28 +971,42 @@
         function saveReschedule() {
             let index = parseInt(document.getElementById('editIndex').value);
             let item = bookedList[index];
+            
+            let selectedZonas = Array.from(document.querySelectorAll('input[name="editZonaCheckbox"]:checked')).map(el => el.value);
             let newMulai = document.getElementById('editTglMulai').value;
             let newSelesai = document.getElementById('editTglSelesai').value;
             let newTelp = document.getElementById('editNoTelepon').value.trim();
+            let newPeserta = parseInt(document.getElementById('editPeserta').value) || 50;
             let newDp = document.getElementById('editDpBooking').value.trim();
 
+            if(selectedZonas.length === 0) { alert('Pilih minimal 1 zona perkemahan!'); return; }
             if(!newMulai || !newSelesai || newMulai > newSelesai) { alert('Rentang tanggal tidak valid!'); return; }
 
             if(item.status === "Dikonfirmasi") {
-                let check = checkBookingConflictsForZones(item.zona, newMulai, newSelesai, index);
+                let check = checkBookingConflictsForZones(selectedZonas, newMulai, newSelesai, index);
                 if(check.conflict) { alert('Gagal Mengubah Jadwal!\n' + check.message); return; }
             }
 
+            let selectedAlat = [];
+            document.querySelectorAll('input[name="editAlatCheckbox"]:checked').forEach(cb => {
+                let alatName = cb.value;
+                let qtyVal = parseInt(document.getElementById('edit_qty_' + alatName).value) || 1;
+                selectedAlat.push({ nama: alatName, qty: qtyVal });
+            });
+
+            bookedList[index].zona = selectedZonas;
             bookedList[index].tglMulai = newMulai;
             bookedList[index].tglSelesai = newSelesai;
             if(newTelp) bookedList[index].telp = newTelp;
+            bookedList[index].peserta = newPeserta;
             bookedList[index].dp = newDp;
+            bookedList[index].alatSewa = selectedAlat;
 
             saveData();
             renderCalendar();
             renderAdminList();
             closeRescheduleModal();
-            alert('Detail & jadwal berhasil diperbarui!');
+            alert('Data pendaftaran, zona, peserta & sewa alat berhasil diperbarui!');
         }
 
         // ================= RENDER DIAGRAM STATISTIK =================
